@@ -1,31 +1,19 @@
 #include <cstdlib>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "mainmenu.hpp"
 
 using namespace sf;
 
 int main()
 {
     RenderWindow window(VideoMode(600, 600), "Hello, world!", Style::Close);
+    Mainmenu mainmenu;
+    mainmenu.draw(window);
 
-    CircleShape circle(300);
-    circle.setFillColor(Color::Blue);
-
-    while (window.isOpen())
+    if (window.isOpen())
     {
-        Event e;
-        while(window.pollEvent(e))
-        {
-            if (e.type == Event::Closed)
-            {
-                window.close();
-            }
-        }
-
-        window.clear();
-        window.draw(circle);
-        window.display();
+        window.close();
     }
-
     return 0;
 }
