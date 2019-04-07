@@ -9,9 +9,17 @@ int main()
 {
     RenderWindow window(VideoMode(600, 600), "Hello, world!", Style::Close);
     Mainmenu mainmenu;
-    mainmenu.draw(window);
+    window.setFramerateLimit(30);
 
-    if (window.isOpen())
+    int programCode = 0;
+    // 0 завершить программу
+    // 1 начать игру
+    // 2 настройки
+    // 3 правила игры
+
+    programCode = mainmenu.draw(window);
+
+    if (window.isOpen()) // лишняя проверка
     {
         window.close();
     }
