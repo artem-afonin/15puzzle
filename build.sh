@@ -7,4 +7,3 @@ mv SFML-2.5.1/include include/
 mv SFML-2.5.1/lib lib/
 rm -rf SFML-2.5.1/
 make
-echo "Build succesful!!!"
