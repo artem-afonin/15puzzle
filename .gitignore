@@ -4,6 +4,9 @@
 *.autosave
 .shadowAssembly/
 texture/*.xcf
+bin
+include
+lib
 
 ##### Default #####
 # Prerequisites
