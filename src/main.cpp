@@ -32,7 +32,7 @@ int main()
             // начать игру
             break;
         case 2:
-            settingsmenu.draw(window);
+            programCode = settingsmenu.draw(window);
             break;
         case 3:
             // открыть правила игры

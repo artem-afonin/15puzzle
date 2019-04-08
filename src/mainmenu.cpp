@@ -41,7 +41,7 @@ int Mainmenu::draw(RenderWindow &window)
             if (event.type == Event::Closed)
             {
                 window.close();
-                return 0;
+                return -1;
             }
         }
 
