@@ -12,16 +12,38 @@ int main()
     window.setFramerateLimit(30);
 
     int programCode = 0;
-    // 0 завершить программу
-    // 1 начать игру
-    // 2 настройки
-    // 3 правила игры
+    // меньше нуля: завершить программу
+    // 0: главное меню
+    // 1: начать игру
+    // 2: настройки
+    // 3: правила игры
 
-    programCode = mainmenu.draw(window);
+    while (programCode >= 0)
+    {
+        switch (programCode)
+        {
+        case 0:
+            programCode = mainmenu.draw(window);
+            break;
+        case 1:
+            // начать игру
+            break;
+        case 2:
+            // открыть настройки
+            break;
+        case 3:
+            // открыть правила игры
+            break;
+        default:
+            programCode = -1;
+            break;
+        }
+    }
 
     if (window.isOpen()) // лишняя проверка
     {
         window.close();
     }
+
     return 0;
 }
