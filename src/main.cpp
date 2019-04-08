@@ -2,14 +2,17 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "mainmenu.hpp"
+#include "settings.hpp"
 
 using namespace sf;
 
 int main()
 {
     RenderWindow window(VideoMode(600, 600), "Hello, world!", Style::Close);
-    Mainmenu mainmenu;
     window.setFramerateLimit(30);
+
+    Mainmenu mainmenu;
+    Settings settingsmenu;
 
     int programCode = 0;
     // меньше нуля: завершить программу
