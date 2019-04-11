@@ -51,12 +51,12 @@ int Mainmenu::draw(RenderWindow &window)
         settingsButton.setFillColor(Color::White);  // на каждом кадре
 
         // ПРОВЕРЯЕМ НАВЕДЕНИЕ НА ПУНКТЫ МЕНЮ //
-        if (IntRect(menuButtonX, menuButtonY + 5, 195, 40).contains(Mouse::getPosition(window)))
+        if (IntRect(startGameButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
         { // если навелись на кнопку "Start game"
             startGameButton.setFillColor(Color::Red); // подсвечиваем
             menuNum = 1;                              // выставляем пункт меню
         }
-        if (IntRect(menuButtonX, menuButtonY + 105, 150, 40).contains(Mouse::getPosition(window)))
+        if (IntRect(settingsButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
         { // если навелись на кнопку "Settings"
             settingsButton.setFillColor(Color::Red); // подсвечиваем
             menuNum = 2;                             // выставляем пункт меню
