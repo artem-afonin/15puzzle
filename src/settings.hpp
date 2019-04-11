@@ -27,6 +27,8 @@ private:
     Texture gameImagePicTexture;
     Sprite gameImagePic;
     RectangleShape gameImageUnderline;
+
+    Text exitButton;
 public:
     Settings();
 
@@ -40,6 +42,7 @@ public:
 
     void colorDifficultyButtons();
     void colorImageButtons();
+    void colorExitButton(RenderWindow &window);
 };
 
 #endif // SETTINGS_HPP

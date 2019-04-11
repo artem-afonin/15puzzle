@@ -48,6 +48,11 @@ Settings::Settings()
 
     gameImageUnderline.setSize(Vector2f(60, 5));
     gameImageUnderline.setFillColor(Color::Red);
+
+    exitButton.setFont(font);
+    exitButton.setCharacterSize(characterSize);
+    exitButton.setString("Exit settings");
+    exitButton.setPosition(30, 500);
 }
 
 int Settings::draw(RenderWindow &window)
@@ -68,6 +73,8 @@ int Settings::draw(RenderWindow &window)
             }
         }
 
+        colorExitButton(window);
+
         if (Mouse::isButtonPressed(Mouse::Left))
         {
             if (IntRect(difficultyOne.getGlobalBounds()).contains(Mouse::getPosition(window)))
@@ -86,6 +93,10 @@ int Settings::draw(RenderWindow &window)
             {
                 setGameImage(2);
             }
+            else if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+            {
+                return 0;
+            }
         }
 
         colorDifficultyButtons();
@@ -100,10 +111,9 @@ int Settings::draw(RenderWindow &window)
         window.draw(gameImageNum);
         window.draw(gameImagePic);
         window.draw(gameImageUnderline);
+        window.draw(exitButton);
         window.display();
     }
-
-    return -1; // пока что недосягаем
 }
 
 
@@ -155,5 +165,19 @@ void Settings::colorImageButtons()
     else
     {
         gameImageUnderline.setPosition(485, 180);
+    }
+}
+
+void Settings::colorExitButton(RenderWindow &window)
+{
+    if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+    {
+        exitButton.setOutlineThickness(2);
+        exitButton.setOutlineColor(Color::Red);
+    }
+    else
+    {
+        exitButton.setOutlineThickness(0);
+        exitButton.setOutlineColor(Color::White);
     }
 }
