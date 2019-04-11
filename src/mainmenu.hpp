@@ -16,6 +16,7 @@ private:
     Text startGameButton;
     Text settingsButton;
     Text rulesButton;
+    Text exitButton;
 
     int menuButtonX;
     int menuButtonY;

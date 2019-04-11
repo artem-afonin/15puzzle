@@ -29,6 +29,11 @@ Mainmenu::Mainmenu()
     rulesButton.setCharacterSize(menuButtonCharacterSize);
     rulesButton.setString("Rules");
     rulesButton.setPosition(menuButtonX, menuButtonY + 200);
+
+    exitButton.setFont(font);
+    exitButton.setCharacterSize(menuButtonCharacterSize);
+    exitButton.setString("Exit");
+    exitButton.setPosition(menuButtonX, menuButtonY + 300);
 }
 
 int Mainmenu::draw(RenderWindow &window)
@@ -55,6 +60,8 @@ int Mainmenu::draw(RenderWindow &window)
         startGameButton.setFillColor(Color::White); // обнуляем цвет в белый
         settingsButton.setFillColor(Color::White);  // на каждом кадре
         rulesButton.setFillColor(Color::White);
+        exitButton.setFillColor(Color::White);
+
         // ПРОВЕРЯЕМ НАВЕДЕНИЕ НА ПУНКТЫ МЕНЮ //
         if (IntRect(startGameButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
         { // если навелись на кнопку "Start game"
@@ -71,6 +78,11 @@ int Mainmenu::draw(RenderWindow &window)
             rulesButton.setFillColor(Color::Red);
             menuNum = 3;
         }
+        if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+        {
+            exitButton.setFillColor(Color::Red);
+            menuNum = 4;
+        }
 
 
         // ПРОВЕРЯЕМ НАЖАТИЕ КЛАВИШИ //
@@ -84,6 +96,8 @@ int Mainmenu::draw(RenderWindow &window)
                 return 2;
             case 3:
                 return 3;
+            case 4:
+                return -1;
             }
         }
 
@@ -93,6 +107,7 @@ int Mainmenu::draw(RenderWindow &window)
         window.draw(startGameButton);
         window.draw(settingsButton);
         window.draw(rulesButton);
+        window.draw(exitButton);
         window.display();
     }
 
