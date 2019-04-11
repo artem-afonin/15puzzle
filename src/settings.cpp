@@ -45,6 +45,9 @@ Settings::Settings()
     gameImagePicTexture.loadFromFile("texture/settingsPicImage.png");
     gameImagePic.setTexture(gameImagePicTexture);
     gameImagePic.setPosition(480, 100);
+
+    gameImageUnderline.setSize(Vector2f(60, 5));
+    gameImageUnderline.setFillColor(Color::Red);
 }
 
 int Settings::draw(RenderWindow &window)
@@ -65,6 +68,29 @@ int Settings::draw(RenderWindow &window)
             }
         }
 
+        if (Mouse::isButtonPressed(Mouse::Left))
+        {
+            if (IntRect(difficultyOne.getGlobalBounds()).contains(Mouse::getPosition(window)))
+            {
+                setGameDiffuculty(1);
+            }
+            else if (IntRect(difficultyTwo.getGlobalBounds()).contains(Mouse::getPosition(window)))
+            {
+                setGameDiffuculty(2);
+            }
+            else if (IntRect(gameImageNum.getGlobalBounds()).contains(Mouse::getPosition(window)))
+            {
+                setGameImage(1);
+            }
+            else if (IntRect(gameImagePic.getGlobalBounds()).contains(Mouse::getPosition(window)))
+            {
+                setGameImage(2);
+            }
+        }
+
+        colorDifficultyButtons();
+        colorImageButtons();
+
         window.clear(menuBackground);
         window.draw(settingsPuzzle);
         window.draw(difficultyString);
@@ -73,6 +99,7 @@ int Settings::draw(RenderWindow &window)
         window.draw(gameImageString);
         window.draw(gameImageNum);
         window.draw(gameImagePic);
+        window.draw(gameImageUnderline);
         window.display();
     }
 
@@ -99,4 +126,34 @@ void Settings::setGameImage(int imageNumber)
 int Settings::getGameImage()
 {
     return gameImage;
+}
+
+void Settings::colorDifficultyButtons()
+{
+    if (getGameDiffuculty() == 1)
+    {
+        difficultyOne.setOutlineThickness(2);
+        difficultyOne.setOutlineColor(Color::Red);
+        difficultyTwo.setOutlineThickness(0);
+        difficultyTwo.setOutlineColor(Color::White);
+    }
+    else
+    {
+        difficultyOne.setOutlineThickness(0);
+        difficultyOne.setOutlineColor(Color::White);
+        difficultyTwo.setOutlineThickness(2);
+        difficultyTwo.setOutlineColor(Color::Red);
+    }
+}
+
+void Settings::colorImageButtons()
+{
+    if (getGameImage() == 1)
+    {
+        gameImageUnderline.setPosition(312, 180);
+    }
+    else
+    {
+        gameImageUnderline.setPosition(485, 180);
+    }
 }

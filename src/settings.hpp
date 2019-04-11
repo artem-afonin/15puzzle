@@ -26,6 +26,7 @@ private:
     Sprite gameImageNum;
     Texture gameImagePicTexture;
     Sprite gameImagePic;
+    RectangleShape gameImageUnderline;
 public:
     Settings();
 
@@ -36,6 +37,9 @@ public:
     void setGameImage(int imageNumber);
 
     int draw(RenderWindow &window);
+
+    void colorDifficultyButtons();
+    void colorImageButtons();
 };
 
 #endif // SETTINGS_HPP
