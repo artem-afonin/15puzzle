@@ -10,6 +10,10 @@ class Rules
 private:
     Font font;
 
+    Text exitButton;
+
+    void colorExitButton(RenderWindow &window);
+
 public:
     Rules();
     int draw(RenderWindow &window);
