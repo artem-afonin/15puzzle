@@ -13,6 +13,38 @@ Settings::Settings()
 
     setGameDiffuculty(2); // 4x4
     setGameImage(1); // цифры
+
+    unsigned int characterSize = 45;
+
+    difficultyString.setFont(font);
+    difficultyString.setCharacterSize(characterSize);
+    difficultyString.setString("Difficulty:");
+    difficultyString.setPosition(30, 30);
+
+    difficultyOne.setFont(font);
+    difficultyOne.setCharacterSize(characterSize);
+    difficultyOne.setString("3x3");
+    difficultyOne.setPosition(30, 100);
+
+    difficultyTwo.setFont(font);
+    difficultyTwo.setCharacterSize(characterSize);
+    difficultyTwo.setString("4x4");
+    difficultyTwo.setPosition(135, 100);
+
+    gameImageString.setFont(font);
+    gameImageString.setCharacterSize(characterSize);
+    gameImageString.setString("Board image:");
+    gameImageString.setPosition(310, 30);
+
+    gameImageNumTexture.loadFromFile("texture/settingsNumImage.png");
+    gameImageNum.setTexture(gameImageNumTexture);
+    gameImageNum.setTextureRect(IntRect(11, 11, 43, 43));
+    gameImageNum.scale(1.5, 1.5);
+    gameImageNum.setPosition(310, 100);
+
+    gameImagePicTexture.loadFromFile("texture/settingsPicImage.png");
+    gameImagePic.setTexture(gameImagePicTexture);
+    gameImagePic.setPosition(480, 100);
 }
 
 int Settings::draw(RenderWindow &window)
@@ -35,6 +67,12 @@ int Settings::draw(RenderWindow &window)
 
         window.clear(menuBackground);
         window.draw(settingsPuzzle);
+        window.draw(difficultyString);
+        window.draw(difficultyOne);
+        window.draw(difficultyTwo);
+        window.draw(gameImageString);
+        window.draw(gameImageNum);
+        window.draw(gameImagePic);
         window.display();
     }
 
