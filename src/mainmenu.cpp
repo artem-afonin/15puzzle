@@ -24,6 +24,11 @@ Mainmenu::Mainmenu()
     settingsButton.setCharacterSize(menuButtonCharacterSize);
     settingsButton.setString("Settings");
     settingsButton.setPosition(menuButtonX, menuButtonY + 100);
+
+    rulesButton.setFont(font);
+    rulesButton.setCharacterSize(menuButtonCharacterSize);
+    rulesButton.setString("Rules");
+    rulesButton.setPosition(menuButtonX, menuButtonY + 200);
 }
 
 int Mainmenu::draw(RenderWindow &window)
@@ -49,7 +54,7 @@ int Mainmenu::draw(RenderWindow &window)
         menuNum = 0; // обнуляем каждую итерацию
         startGameButton.setFillColor(Color::White); // обнуляем цвет в белый
         settingsButton.setFillColor(Color::White);  // на каждом кадре
-
+        rulesButton.setFillColor(Color::White);
         // ПРОВЕРЯЕМ НАВЕДЕНИЕ НА ПУНКТЫ МЕНЮ //
         if (IntRect(startGameButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
         { // если навелись на кнопку "Start game"
@@ -60,6 +65,11 @@ int Mainmenu::draw(RenderWindow &window)
         { // если навелись на кнопку "Settings"
             settingsButton.setFillColor(Color::Red); // подсвечиваем
             menuNum = 2;                             // выставляем пункт меню
+        }
+        if (IntRect(rulesButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+        {
+            rulesButton.setFillColor(Color::Red);
+            menuNum = 3;
         }
 
 
@@ -72,6 +82,8 @@ int Mainmenu::draw(RenderWindow &window)
                 return 1;
             case 2:
                 return 2;
+            case 3:
+                return 3;
             }
         }
 
@@ -79,7 +91,8 @@ int Mainmenu::draw(RenderWindow &window)
         window.clear(menuBackground);
         window.draw(linuxLogo);
         window.draw(startGameButton);
-        window.draw(settingsButton);        
+        window.draw(settingsButton);
+        window.draw(rulesButton);
         window.display();
     }
 
