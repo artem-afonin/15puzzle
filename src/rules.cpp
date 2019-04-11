@@ -3,6 +3,11 @@
 
 using namespace sf;
 
+Rules::Rules()
+{
+    font.loadFromFile("texture/font.ttf");
+}
+
 int Rules::draw(RenderWindow &window)
 {
     window.setTitle("Rules");
@@ -20,5 +25,7 @@ int Rules::draw(RenderWindow &window)
                 return -1;
             }
         }
+        window.clear(menuBackground);
+        window.display();
     }
 }

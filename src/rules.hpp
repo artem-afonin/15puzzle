@@ -8,6 +8,8 @@ using namespace sf;
 class Rules
 {
 private:
+    Font font;
+
 public:
     Rules();
     int draw(RenderWindow &window);
