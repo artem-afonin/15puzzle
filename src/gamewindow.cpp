@@ -1,3 +1,4 @@
+#include <sstream>
 #include <SFML/Graphics.hpp>
 #include "gamewindow.hpp"
 
@@ -13,12 +14,18 @@ Gamewindow::Gamewindow()
     exitButton.setCharacterSize(characterSize);
     exitButton.setString("Exit to main menu");
     exitButton.setPosition(20, 520);
+
+    gameTimeText.setFont(font);
+    gameTimeText.setCharacterSize(characterSize);
+    gameTimeText.setPosition(400, 520);
 }
 
 int Gamewindow::draw(RenderWindow &window)
 {
     window.setTitle("15-Puzzle GAME");
     Color gameBackground(111, 129, 214); // Цвет заднего фона (светло-голубой)
+    std::ostringstream gameTimeString;
+    Clock gameTime;
 
     Event event;
 
@@ -33,8 +40,13 @@ int Gamewindow::draw(RenderWindow &window)
             }
         }
 
+        gameTimeString << (int) gameTime.getElapsedTime().asSeconds();
+        gameTimeText.setString("Time: " + gameTimeString.str());
+        gameTimeString.str("");
+
         window.clear(gameBackground);
         window.draw(exitButton);
+        window.draw(gameTimeText);
         window.display();
     }
 }

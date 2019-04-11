@@ -11,8 +11,10 @@ private:
     Font font;
 
     Text exitButton;
+    Text timerText;
+    Text gameTimeText;
 
-    Clock gameTime;
+    Clock gameTimeClock;
 public:
     Gamewindow();
 
