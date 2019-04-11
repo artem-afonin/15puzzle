@@ -1,30 +1,51 @@
 #include <cstdlib>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "mainmenu.hpp"
+#include "settings.hpp"
 
 using namespace sf;
 
 int main()
 {
     RenderWindow window(VideoMode(600, 600), "Hello, world!", Style::Close);
+    window.setFramerateLimit(30);
 
-    CircleShape circle(300);
-    circle.setFillColor(Color::Blue);
+    Mainmenu mainmenu;
+    Settings settingsmenu;
 
-    while (window.isOpen())
+    int programCode = 0;
+    // меньше нуля: завершить программу
+    // 0: главное меню
+    // 1: начать игру
+    // 2: настройки
+    // 3: правила игры
+
+    while (programCode >= 0)
     {
-        Event e;
-        while(window.pollEvent(e))
+        switch (programCode)
         {
-            if (e.type == Event::Closed)
-            {
-                window.close();
-            }
+        case 0:
+            programCode = mainmenu.draw(window);
+            break;
+        case 1:
+            // начать игру
+            break;
+        case 2:
+            programCode = settingsmenu.draw(window);
+            break;
+        case 3:
+            // открыть правила игры
+            break;
+        default:
+            programCode = -1;
+            break;
         }
+    }
 
-        window.clear();
-        window.draw(circle);
-        window.display();
+    if (window.isOpen()) // лишняя проверка
+    {
+        window.close();
     }
 
     return 0;
