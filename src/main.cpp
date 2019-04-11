@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "mainmenu.hpp"
 #include "settings.hpp"
+#include "rules.hpp"
 
 using namespace sf;
 
@@ -13,6 +14,7 @@ int main()
 
     Mainmenu mainmenu;
     Settings settingsmenu;
+    Rules rulesmenu;
 
     int programCode = 0;
     // меньше нуля: завершить программу
@@ -35,7 +37,7 @@ int main()
             programCode = settingsmenu.draw(window);
             break;
         case 3:
-            // открыть правила игры
+            programCode = rulesmenu.draw(window);
             break;
         default:
             programCode = -1;
