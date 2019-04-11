@@ -29,6 +29,10 @@ private:
     RectangleShape gameImageUnderline;
 
     Text exitButton;
+
+    void colorDifficultyButtons();
+    void colorImageButtons();
+    void colorExitButton(RenderWindow &window);
 public:
     Settings();
 
@@ -39,10 +43,6 @@ public:
     void setGameImage(int imageNumber);
 
     int draw(RenderWindow &window);
-
-    void colorDifficultyButtons();
-    void colorImageButtons();
-    void colorExitButton(RenderWindow &window);
 };
 
 #endif // SETTINGS_HPP
