@@ -14,6 +14,7 @@ Gamewindow::Gamewindow()
     exitButton.setCharacterSize(characterSize);
     exitButton.setString("Exit to main menu");
     exitButton.setPosition(20, 520);
+    exitButton.setOutlineColor(Color::Red);
 
     gameTimeText.setFont(font);
     gameTimeText.setCharacterSize(characterSize);
@@ -40,6 +41,16 @@ int Gamewindow::draw(RenderWindow &window)
             }
         }
 
+        colorExitButton(window);
+
+        if (Mouse::isButtonPressed(Mouse::Left))
+        {
+            if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+            {
+                return 0;
+            }
+        }
+
         gameTimeString << (int) gameTime.getElapsedTime().asSeconds();
         gameTimeText.setString("Time: " + gameTimeString.str());
         gameTimeString.str("");
@@ -48,5 +59,19 @@ int Gamewindow::draw(RenderWindow &window)
         window.draw(exitButton);
         window.draw(gameTimeText);
         window.display();
+    }
+}
+
+void Gamewindow::colorExitButton(RenderWindow &window)
+{
+    if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+    {
+        exitButton.setOutlineThickness(2);
+        exitButton.setOutlineColor(Color::Red);
+    }
+    else
+    {
+        exitButton.setOutlineThickness(0);
+        exitButton.setOutlineColor(Color::White);
     }
 }

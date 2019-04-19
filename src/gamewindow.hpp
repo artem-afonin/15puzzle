@@ -8,6 +8,7 @@ using namespace sf;
 class Gamewindow
 {
 private:
+    // ПЕРЕМЕННЫЕ
     Font font;
 
     Text exitButton;
@@ -15,6 +16,9 @@ private:
     Text gameTimeText;
 
     Clock gameTimeClock;
+
+    //МЕТОДЫ
+    void colorExitButton(RenderWindow &window);
 public:
     Gamewindow();
 
