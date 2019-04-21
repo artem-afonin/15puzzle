@@ -31,7 +31,7 @@ int main()
             programCode = mainmenu.draw(window);
             break;
         case 1:
-            programCode = game.draw(window);
+            programCode = game.draw(window, settingsmenu.getGameDiffuculty(), settingsmenu.getGameImage());
             break;
         case 2:
             programCode = settingsmenu.draw(window);

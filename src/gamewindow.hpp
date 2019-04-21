@@ -17,12 +17,16 @@ private:
 
     Clock gameTimeClock;
 
+    Texture gameBoardBigTexture;
+    Sprite gameBoardBig;
+
     //МЕТОДЫ
     void colorExitButton(RenderWindow &window);
+    void drawBoard(RenderWindow &window, int gameDifficulty);
 public:
     Gamewindow();
 
-    int draw(RenderWindow &window);
+    int draw(RenderWindow &window, int gameDifficulty, int gameImage);
 };
 
 #endif // GAMEWINDOW_HPP
