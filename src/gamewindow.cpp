@@ -96,6 +96,7 @@ void Gamewindow::colorExitButton(RenderWindow &window)
 
 void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
 {
+    int dx = 0, dy = 0;
     if (gameDifficulty == 2)
     {
         for (int i = 0; i < 4; i++)
@@ -104,7 +105,9 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
             {
                 if (boardBigArr[i][j] != 16)
                 {
-                    gameBoardBig[i][j].setPosition(70 + 115 * ((boardBigArr[i][j] - 1) % 4), 20 + 115 * ((boardBigArr[i][j] - 1) / 4));
+                    dx = 115 * ((boardBigArr[i][j] - 1) % 4);
+                    dy = 115 * ((boardBigArr[i][j] - 1) / 4);
+                    gameBoardBig[i][j].setPosition(70 + dx, 20 + dy);
                     window.draw(gameBoardBig[i][j]);
                 }
             }
