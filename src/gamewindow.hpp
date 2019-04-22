@@ -18,7 +18,7 @@ private:
     Clock gameTimeClock;
 
     Texture gameBoardBigTexture;
-    Sprite gameBoardBig;
+    Sprite gameBoardBig[4][4];
 
     //МЕТОДЫ
     void colorExitButton(RenderWindow &window);

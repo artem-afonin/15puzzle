@@ -24,7 +24,14 @@ Gamewindow::Gamewindow()
     gameTimeText.setPosition(400, 520);
 
     gameBoardBigTexture.loadFromFile("texture/4x4gameboard.png");
-    gameBoardBig.setTexture(gameBoardBigTexture);
+    for (int i = 0, count = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            gameBoardBig[i][j].setTexture(gameBoardBigTexture);
+            gameBoardBig[i][j].setTextureRect(IntRect(115 * count++, 0, 115, 115));
+        }
+    }
 }
 
 int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
@@ -97,9 +104,8 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
             {
                 if (boardBigArr[i][j] != 16)
                 {
-                    gameBoardBig.setTextureRect(IntRect(115 * (boardBigArr[i][j] - 1), 0, 115, 115));
-                    gameBoardBig.setPosition(70 + 115 * j, 10 + 115 * i);
-                    window.draw(gameBoardBig);
+                    gameBoardBig[i][j].setPosition(70 + 115 * ((boardBigArr[i][j] - 1) % 4), 20 + 115 * ((boardBigArr[i][j] - 1) / 4));
+                    window.draw(gameBoardBig[i][j]);
                 }
             }
         }
