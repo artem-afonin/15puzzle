@@ -85,12 +85,10 @@ void Gamewindow::colorExitButton(RenderWindow &window)
     if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
     {
         exitButton.setOutlineThickness(2);
-        exitButton.setOutlineColor(Color::Red);
     }
     else
     {
         exitButton.setOutlineThickness(0);
-        exitButton.setOutlineColor(Color::White);
     }
 }
 
