@@ -54,18 +54,17 @@ int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
                 window.close();
                 return -1;
             }
+            if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
+            {
+                if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                {
+                    return 0;
+                }
+            }
         }
 
         colorExitButton(window);
         colorPuzzles(Mouse::getPosition(window), gameDifficulty);
-
-        if (Mouse::isButtonPressed(Mouse::Left))
-        {
-            if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
-            {
-                return 0;
-            }
-        }
 
         gameTimeString << (int) gameTime.getElapsedTime().asSeconds();
         gameTimeText.setString("Time: " + gameTimeString.str());
