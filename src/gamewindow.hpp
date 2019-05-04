@@ -5,6 +5,13 @@
 
 using namespace sf;
 
+struct gameCell
+{
+    int position; // позиция на поле [1 - 16]
+    int number; // номер пятнашки (пустая пятнашка - 0)
+    Sprite sprite;
+};
+
 class Gamewindow
 {
 private:
@@ -18,7 +25,7 @@ private:
     Clock gameTimeClock;
 
     Texture gameBoardBigTexture;
-    Sprite gameBoardBig[4][4];
+    gameCell puzzle[4][4];
 
     //МЕТОДЫ
     void colorExitButton(RenderWindow &window);

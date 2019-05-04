@@ -5,8 +5,6 @@
 
 using namespace sf;
 
-static int boardBigArr[4][4];
-
 Gamewindow::Gamewindow()
 {
     font.loadFromFile("texture/font.ttf");
@@ -28,8 +26,8 @@ Gamewindow::Gamewindow()
     {
         for (int j = 0; j < 4; j++)
         {
-            gameBoardBig[i][j].setTexture(gameBoardBigTexture);
-            gameBoardBig[i][j].setTextureRect(IntRect(115 * count++, 0, 115, 115));
+            puzzle[i][j].sprite.setTexture(gameBoardBigTexture);
+            puzzle[i][j].sprite.setTextureRect(IntRect(115 * count++, 0, 115, 115));
         }
     }
 }
@@ -43,7 +41,7 @@ int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
 
     for (int i = 0, count = 0; i < 4; i++)
         for (int j = 0; j < 4; j++)
-            boardBigArr[i][j] = ++count;
+            puzzle[i][j].number = ++count;
 
     Event event;
 
@@ -101,13 +99,13 @@ void Gamewindow::colorPuzzles(Vector2i mousePosition, int gameDifficulty)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (IntRect(gameBoardBig[i][j].getGlobalBounds()).contains(mousePosition))
+                if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition))
                 {
-                    gameBoardBig[i][j].setColor(Color::Red);
+                    puzzle[i][j].sprite.setColor(Color::Red);
                 }
                 else
                 {
-                    gameBoardBig[i][j].setColor(Color::White);
+                    puzzle[i][j].sprite.setColor(Color::White);
                 }
             }
         }
@@ -123,12 +121,12 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (boardBigArr[i][j] != 16)
+                if (puzzle[i][j].number != 16)
                 {
-                    dx = 115 * ((boardBigArr[i][j] - 1) % 4);
-                    dy = 115 * ((boardBigArr[i][j] - 1) / 4);
-                    gameBoardBig[i][j].setPosition(70 + dx, 20 + dy);
-                    window.draw(gameBoardBig[i][j]);
+                    dx = 115 * ((puzzle[i][j].number - 1) % 4);
+                    dy = 115 * ((puzzle[i][j].number - 1) / 4);
+                    puzzle[i][j].sprite.setPosition(70 + dx, 20 + dy);
+                    window.draw(puzzle[i][j].sprite);
                 }
             }
         }
