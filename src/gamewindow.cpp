@@ -59,6 +59,7 @@ int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
         }
 
         colorExitButton(window);
+        colorPuzzles(Mouse::getPosition(window), gameDifficulty);
 
         if (Mouse::isButtonPressed(Mouse::Left))
         {
@@ -89,6 +90,27 @@ void Gamewindow::colorExitButton(RenderWindow &window)
     else
     {
         exitButton.setOutlineThickness(0);
+    }
+}
+
+void Gamewindow::colorPuzzles(Vector2i mousePosition, int gameDifficulty)
+{
+    if (gameDifficulty == 2)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (IntRect(gameBoardBig[i][j].getGlobalBounds()).contains(mousePosition))
+                {
+                    gameBoardBig[i][j].setColor(Color::Red);
+                }
+                else
+                {
+                    gameBoardBig[i][j].setColor(Color::White);
+                }
+            }
+        }
     }
 }
 

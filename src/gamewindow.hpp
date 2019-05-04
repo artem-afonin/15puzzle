@@ -22,6 +22,7 @@ private:
 
     //МЕТОДЫ
     void colorExitButton(RenderWindow &window);
+    void colorPuzzles(Vector2i mousePosition, int gameDifficulty);
     void drawBoard(RenderWindow &window, int gameDifficulty);
 public:
     Gamewindow();
