@@ -35,13 +35,13 @@ int main()
             mainmenu = new Mainmenu;
             programCode = mainmenu->draw(window);
             delete mainmenu;
-            mainmenu = nullptr;
+            mainmenu = NULL;
             break;
         case 1:
             game = new Gamewindow;
             programCode = game->draw(window, currentGameDifficulty, currentGameImage);
             delete game;
-            game = nullptr;
+            game = NULL;
             break;
         case 2:
             settingsmenu = new Settings;
@@ -49,13 +49,13 @@ int main()
             currentGameDifficulty = settingsmenu->getGameDiffuculty();
             currentGameImage = settingsmenu->getGameImage();
             delete settingsmenu;
-            settingsmenu = nullptr;
+            settingsmenu = NULL;
             break;
         case 3:
             rulesmenu = new Rules;
             programCode = rulesmenu->draw(window);
             delete rulesmenu;
-            rulesmenu = nullptr;
+            rulesmenu = NULL;
             break;
         default:
             programCode = -1;
