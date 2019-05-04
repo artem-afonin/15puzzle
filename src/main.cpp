@@ -4,6 +4,7 @@
 #include "mainmenu.hpp"
 #include "settings.hpp"
 #include "rules.hpp"
+#include "gamewindow.hpp"
 
 using namespace sf;
 
@@ -15,6 +16,7 @@ int main()
     Mainmenu mainmenu;
     Settings settingsmenu;
     Rules rulesmenu;
+    Gamewindow game;
 
     int programCode = 0;
     // меньше нуля: завершить программу
@@ -31,7 +33,7 @@ int main()
             programCode = mainmenu.draw(window);
             break;
         case 1:
-            // начать игру
+            programCode = game.draw(window, settingsmenu.getGameDiffuculty(), settingsmenu.getGameImage());
             break;
         case 2:
             programCode = settingsmenu.draw(window);
