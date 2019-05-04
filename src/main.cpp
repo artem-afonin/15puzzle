@@ -13,10 +13,12 @@ int main()
     RenderWindow window(VideoMode(600, 600), "Hello, world!", Style::Close);
     window.setFramerateLimit(30);
 
-    Mainmenu mainmenu;
-    Settings settingsmenu;
-    Rules rulesmenu;
-    Gamewindow game;
+    Mainmenu* mainmenu;
+    Settings* settingsmenu;
+    Rules* rulesmenu;
+    Gamewindow* game;
+    int currentGameDifficulty = 2;
+    int currentGameImage = 1;
 
     int programCode = 0;
     // меньше нуля: завершить программу
@@ -30,16 +32,30 @@ int main()
         switch (programCode)
         {
         case 0:
-            programCode = mainmenu.draw(window);
+            mainmenu = new Mainmenu;
+            programCode = mainmenu->draw(window);
+            delete mainmenu;
+            mainmenu = nullptr;
             break;
         case 1:
-            programCode = game.draw(window, settingsmenu.getGameDiffuculty(), settingsmenu.getGameImage());
+            game = new Gamewindow;
+            programCode = game->draw(window, currentGameDifficulty, currentGameImage);
+            delete game;
+            game = nullptr;
             break;
         case 2:
-            programCode = settingsmenu.draw(window);
+            settingsmenu = new Settings;
+            programCode = settingsmenu->draw(window);
+            currentGameDifficulty = settingsmenu->getGameDiffuculty();
+            currentGameImage = settingsmenu->getGameImage();
+            delete settingsmenu;
+            settingsmenu = nullptr;
             break;
         case 3:
-            programCode = rulesmenu.draw(window);
+            rulesmenu = new Rules;
+            programCode = rulesmenu->draw(window);
+            delete rulesmenu;
+            rulesmenu = nullptr;
             break;
         default:
             programCode = -1;
