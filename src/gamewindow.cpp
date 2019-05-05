@@ -149,17 +149,11 @@ void Gamewindow::movePuzzle(Vector2i mousePosition, int gameDifficulty)
                 {
                     if ((abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 1)||(abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 4))
                     {
-                        zero_x = (puzzle[i][j].position-1)/4;
-                        zero_y = (puzzle[i][j].position-1)%4;
+                      //  zero_x = (puzzle[i][j].position-1)/4;
+                      //  zero_y = (puzzle[i][j].position-1)%4;
                         int temp = puzzle[x_null][y_null].position;
                         puzzle[x_null][y_null].position = puzzle[i][j].position;
                         puzzle[i][j].position = temp;
-
-                        //cout << x_null << y_null << "   ";
-
-
-
-                        cout << zero_x << zero_y << "   ";
                     }
                     else return;
                }
