@@ -1,5 +1,6 @@
 #include <sstream>
 #include <iostream>
+#include <math.h>
 #include <SFML/Graphics.hpp>
 #include "gamewindow.hpp"
 
@@ -7,7 +8,7 @@ using namespace sf;
 using namespace std;
 
 int y_null = 3, x_null = 3;//координаты пустой клетки
-
+int zero_x = 3, zero_y = 3;
 Gamewindow::Gamewindow()
 {
     font.loadFromFile("texture/font.ttf");
@@ -140,20 +141,27 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
 
 void Gamewindow::movePuzzle(Vector2i mousePosition, int gameDifficulty)
 {
-
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
                 if ((Mouse::isButtonPressed(Mouse::Left))&&(IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition)))
                 {
-                        int temp;
-                        cout << "i=" << i << "j=" << j << "   ";
-                        cout << "old" << x_null << y_null << "    ";
-                        temp = puzzle[x_null][y_null].position;
+                    if ((abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 1)||(abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 4))
+                    {
+                        zero_x = (puzzle[i][j].position-1)/4;
+                        zero_y = (puzzle[i][j].position-1)%4;
+                        int temp = puzzle[x_null][y_null].position;
                         puzzle[x_null][y_null].position = puzzle[i][j].position;
                         puzzle[i][j].position = temp;
-                        cout << x_null << y_null << "    ";
+
+                        //cout << x_null << y_null << "   ";
+
+
+
+                        cout << zero_x << zero_y << "   ";
+                    }
+                    else return;
                }
            }
       }
