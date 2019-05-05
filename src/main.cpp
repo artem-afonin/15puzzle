@@ -11,7 +11,7 @@ using namespace sf;
 int main()
 {
     RenderWindow window(VideoMode(600, 600), "Hello, world!", Style::Close);
-    window.setFramerateLimit(6);
+    window.setFramerateLimit(4);
 
     Mainmenu* mainmenu;
     Settings* settingsmenu;

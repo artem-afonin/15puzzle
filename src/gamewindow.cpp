@@ -34,10 +34,15 @@ Gamewindow::Gamewindow()
         }
     }
 
+    gameNullTexture.loadFromFile("texture/nullImage.png");// текстура пустой области
+    puzzle[3][3].sprite.setTexture(gameNullTexture);
+    puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
+
+
     for (int i = 0, count = 0; i < 4; i++)
         for (int j = 0; j < 4; j++)
             puzzle[i][j].number = ++count;
-    puzzle[x_null][y_null].number = 0;
+    puzzle[x_null][y_null].number = 16;
 }
 
 int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
@@ -72,14 +77,14 @@ int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
         gameTimeString << (int) gameTime.getElapsedTime().asSeconds();
         gameTimeText.setString("Time: " + gameTimeString.str());
         gameTimeString.str("");
-
         window.clear(gameBackground);
         window.draw(exitButton);
         window.draw(gameTimeText);
+        movePuzzle(Mouse::getPosition(window), window, gameDifficulty);
         drawBoard(window, gameDifficulty);
         window.display();
 
-        movePuzzle(Mouse::getPosition(window), window, gameDifficulty);
+
     }
 }
 
@@ -132,27 +137,29 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
                     puzzle[i][j].sprite.setPosition(70 + dx, 20 + dy);
                     window.draw(puzzle[i][j].sprite);
                 }
-            }
+           }
         }
     }
 }
 
 void Gamewindow::movePuzzle(Vector2i mousePosition, RenderWindow &window, int gameDifficulty)
 {
-    if (Mouse::isButtonPressed(Mouse::Left))
-    {
+
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition))
+                if (Mouse::isButtonPressed(Mouse::Left))
                 {
-                    puzzle[x_null][y_null].number = puzzle[i][j].number;
-                    puzzle[i][j].number = 0;
-                    x_null = i; y_null = j;
-                    cout << x_null << y_null << "   ";
-                }
-            }
-        }
-    }
+                    if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition))
+                    {
+                        puzzle[x_null][y_null].number = puzzle[i][j].number;
+                        x_null = i; y_null = j;
+                        puzzle[i][j].number = 16;
+                        cout << x_null << y_null << "   ";
+                    }
+
+               }
+           }
+      }
 }

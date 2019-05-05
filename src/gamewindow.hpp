@@ -25,6 +25,7 @@ int y_null = 3, x_null = 3;//координаты пустой клетки
     Clock gameTimeClock;
 
     Texture gameBoardBigTexture;
+    Texture gameNullTexture;
     gameCell puzzle[4][4];
 
     //МЕТОДЫ
