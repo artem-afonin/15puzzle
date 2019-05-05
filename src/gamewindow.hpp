@@ -32,7 +32,7 @@ int y_null = 3, x_null = 3;//координаты пустой клетки
     void colorExitButton(RenderWindow &window);
     void colorPuzzles(Vector2i mousePosition, int gameDifficulty);
     void drawBoard(RenderWindow &window, int gameDifficulty);
-    void movePuzzle(Vector2i mousePosition,  RenderWindow &window, int gameDifficulty);
+    void movePuzzle(Vector2i mousePosition, int gameDifficulty);
 public:
     Gamewindow();
 

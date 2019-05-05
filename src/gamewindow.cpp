@@ -29,6 +29,8 @@ Gamewindow::Gamewindow()
     {
         for (int j = 0; j < 4; j++)
         {
+            puzzle[i][j].number = count + 1;
+            puzzle[i][j].position = count + 1;
             puzzle[i][j].sprite.setTexture(gameBoardBigTexture);
             puzzle[i][j].sprite.setTextureRect(IntRect(115 * count++, 0, 115, 115));
         }
@@ -37,12 +39,6 @@ Gamewindow::Gamewindow()
     gameNullTexture.loadFromFile("texture/nullImage.png");// текстура пустой области
     puzzle[3][3].sprite.setTexture(gameNullTexture);
     puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
-
-
-    for (int i = 0, count = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++)
-            puzzle[i][j].number = ++count;
-    puzzle[x_null][y_null].number = 16;
 }
 
 int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
@@ -80,8 +76,8 @@ int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
         window.clear(gameBackground);
         window.draw(exitButton);
         window.draw(gameTimeText);
-        movePuzzle(Mouse::getPosition(window), window, gameDifficulty);
         drawBoard(window, gameDifficulty);
+        movePuzzle(Mouse::getPosition(window), gameDifficulty);
         window.display();
 
 
@@ -130,10 +126,10 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (puzzle[i][j].number != 0 )
+                if (puzzle[i][j].position != 0 )
                 {
-                    dx = 115 * ((puzzle[i][j].number - 1) % 4);
-                    dy = 115 * ((puzzle[i][j].number - 1) / 4);
+                    dx = 115 * ((puzzle[i][j].position - 1) % 4);
+                    dy = 115 * ((puzzle[i][j].position - 1) / 4);
                     puzzle[i][j].sprite.setPosition(70 + dx, 20 + dy);
                     window.draw(puzzle[i][j].sprite);
                 }
@@ -142,23 +138,22 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
     }
 }
 
-void Gamewindow::movePuzzle(Vector2i mousePosition, RenderWindow &window, int gameDifficulty)
+void Gamewindow::movePuzzle(Vector2i mousePosition, int gameDifficulty)
 {
 
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (Mouse::isButtonPressed(Mouse::Left))
+                if ((Mouse::isButtonPressed(Mouse::Left))&&(IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition)))
                 {
-                    if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition))
-                    {
-                        puzzle[x_null][y_null].number = puzzle[i][j].number;
-                        x_null = i; y_null = j;
-                        puzzle[i][j].number = 16;
-                        cout << x_null << y_null << "   ";
-                    }
-
+                        int temp;
+                        cout << "i=" << i << "j=" << j << "   ";
+                        cout << "old" << x_null << y_null << "    ";
+                        temp = puzzle[x_null][y_null].position;
+                        puzzle[x_null][y_null].position = puzzle[i][j].position;
+                        puzzle[i][j].position = temp;
+                        cout << x_null << y_null << "    ";
                }
            }
       }
