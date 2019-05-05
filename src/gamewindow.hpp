@@ -17,7 +17,7 @@ class Gamewindow
 private:
     // ПЕРЕМЕННЫЕ
     Font font;
-
+int y_null = 3, x_null = 3;//координаты пустой клетки
     Text exitButton;
     Text timerText;
     Text gameTimeText;
@@ -31,6 +31,7 @@ private:
     void colorExitButton(RenderWindow &window);
     void colorPuzzles(Vector2i mousePosition, int gameDifficulty);
     void drawBoard(RenderWindow &window, int gameDifficulty);
+    void movePuzzle(Vector2i mousePosition,  RenderWindow &window, int gameDifficulty);
 public:
     Gamewindow();
 
