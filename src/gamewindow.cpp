@@ -6,7 +6,7 @@
 using namespace sf;
 using namespace std;
 
-int y_null = 1, x_null = 1;//координаты пустой клетки
+int y_null = 3, x_null = 3;//координаты пустой клетки
 
 Gamewindow::Gamewindow()
 {
@@ -25,17 +25,17 @@ Gamewindow::Gamewindow()
     gameTimeText.setPosition(400, 520);
 
     gameBoardBigTexture.loadFromFile("texture/4x4gameboard.png");
-    for (int i = 0, count = 0; i < 3; i++)
+    for (int i = 0, count = 0; i < 4; i++)
     {
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < 4; j++)
         {
             puzzle[i][j].sprite.setTexture(gameBoardBigTexture);
             puzzle[i][j].sprite.setTextureRect(IntRect(115 * count++, 0, 115, 115));
         }
     }
 
-    for (int i = 0, count = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
+    for (int i = 0, count = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
             puzzle[i][j].number = ++count;
     puzzle[x_null][y_null].number = 0;
 }
@@ -99,9 +99,9 @@ void Gamewindow::colorPuzzles(Vector2i mousePosition, int gameDifficulty)
 {
     if (gameDifficulty == 2)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 4; j++)
             {
                 if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition))
                 {
@@ -121,9 +121,9 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
     int dx = 0, dy = 0;
     if (gameDifficulty == 2)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 4; j++)
             {
                 if (puzzle[i][j].number != 0 )
                 {
@@ -141,9 +141,9 @@ void Gamewindow::movePuzzle(Vector2i mousePosition, RenderWindow &window, int ga
 {
     if (Mouse::isButtonPressed(Mouse::Left))
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 4; j++)
             {
                 if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition))
                 {
