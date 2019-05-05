@@ -8,7 +8,7 @@ using namespace sf;
 using namespace std;
 
 int y_null = 3, x_null = 3;//координаты пустой клетки
-int zero_x = 3, zero_y = 3;
+
 Gamewindow::Gamewindow()
 {
     font.loadFromFile("texture/font.ttf");
@@ -26,7 +26,8 @@ Gamewindow::Gamewindow()
     gameTimeText.setPosition(400, 520);
 
     gameBoardBigTexture.loadFromFile("texture/4x4gameboard.png");
-    for (int i = 0, count = 0; i < 4; i++)
+
+    for (int i = 0, count = 0; i < 4; i++) //заполнение номеров, позиций и текстур
     {
         for (int j = 0; j < 4; j++)
         {
@@ -78,7 +79,7 @@ int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
         window.draw(exitButton);
         window.draw(gameTimeText);
         drawBoard(window, gameDifficulty);
-        movePuzzle(Mouse::getPosition(window), gameDifficulty);
+        movePuzzle(Mouse::getPosition(window), gameDifficulty);//передвижение пятнашек
         window.display();
 
 
@@ -147,10 +148,8 @@ void Gamewindow::movePuzzle(Vector2i mousePosition, int gameDifficulty)
             {
                 if ((Mouse::isButtonPressed(Mouse::Left))&&(IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition)))
                 {
-                    if ((abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 1)||(abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 4))
+                   if ((abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 1 )||(abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 4))
                     {
-                      //  zero_x = (puzzle[i][j].position-1)/4;
-                      //  zero_y = (puzzle[i][j].position-1)%4;
                         int temp = puzzle[x_null][y_null].position;
                         puzzle[x_null][y_null].position = puzzle[i][j].position;
                         puzzle[i][j].position = temp;
