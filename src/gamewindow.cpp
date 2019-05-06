@@ -153,8 +153,8 @@ void Gamewindow::movePuzzle(Vector2i mousePosition)
                     int y = (puzzle[i][j].position - 1)/4;
                     int x = (puzzle[i][j].position - 1)%4;
 
-                   if ((abs(y_zero - y)) + (abs(x_zero - x)) == 1)
-                   {
+                    if ((abs(y_zero - y)) + (abs(x_zero - x)) == 1)
+                    {
                         int temp = puzzle[x_null][y_null].position;
                         puzzle[x_null][y_null].position = puzzle[i][j].position;
                         puzzle[i][j].position = temp;
