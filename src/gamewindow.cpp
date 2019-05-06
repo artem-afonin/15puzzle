@@ -78,7 +78,7 @@ int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
         window.draw(exitButton);
         window.draw(gameTimeText);
         drawBoard(window, gameDifficulty);
-        movePuzzle(Mouse::getPosition(window), gameDifficulty);//передвижение пятнашек
+        movePuzzle(Mouse::getPosition(window));//передвижение пятнашек
         window.display();
 
 
@@ -139,7 +139,7 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
     }
 }
 
-void Gamewindow::movePuzzle(Vector2i mousePosition, int gameDifficulty)
+void Gamewindow::movePuzzle(Vector2i mousePosition)
 {
         for (int i = 0; i < 4; i++)
         {
@@ -147,6 +147,7 @@ void Gamewindow::movePuzzle(Vector2i mousePosition, int gameDifficulty)
             {
                 if ((Mouse::isButtonPressed(Mouse::Left))&&(IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition)))
                 {
+
                    if ((abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 1 )||(abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 4))
                     {
                         int temp = puzzle[x_null][y_null].position;
