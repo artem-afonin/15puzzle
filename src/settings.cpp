@@ -71,6 +71,8 @@ int Settings::draw(RenderWindow &window)
                 window.close();
                 return -1;
             }
+            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
+                return 0;
         }
 
         colorExitButton(window);
