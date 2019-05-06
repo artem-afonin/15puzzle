@@ -147,9 +147,14 @@ void Gamewindow::movePuzzle(Vector2i mousePosition)
             {
                 if ((Mouse::isButtonPressed(Mouse::Left))&&(IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition)))
                 {
+                    int y_zero = (puzzle[x_null][y_null].position - 1)/4;
+                    int x_zero = (puzzle[x_null][y_null].position - 1)%4;
 
-                   if ((abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 1 )||(abs(puzzle[x_null][y_null].position - puzzle[i][j].position) == 4))
-                    {
+                    int y = (puzzle[i][j].position - 1)/4;
+                    int x = (puzzle[i][j].position - 1)%4;
+
+                   if ((abs(y_zero - y)) + (abs(x_zero - x)) == 1)
+                   {
                         int temp = puzzle[x_null][y_null].position;
                         puzzle[x_null][y_null].position = puzzle[i][j].position;
                         puzzle[i][j].position = temp;
