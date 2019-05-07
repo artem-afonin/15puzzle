@@ -1,0 +1,11 @@
+dist: xenial
+sudo: false
+language: cpp
+compiler: g++
+
+branches:
+  only:
+  - develop
+
+script:
+  - ./build.sh
