@@ -40,6 +40,10 @@ Gamewindow::Gamewindow()
     gameNullTexture.loadFromFile("texture/nullImage.png");// текстура пустой области
     puzzle[3][3].sprite.setTexture(gameNullTexture);
     puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
+
+    for (int i=0;i<1000;i++) {
+        mixPuzzle();
+    }
 }
 
 int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
@@ -166,4 +170,11 @@ void Gamewindow::movePuzzle(int i, int j)
                     }
                     else return;
                }
+}
+
+void Gamewindow::mixPuzzle()
+{
+    int m = rand()%4;
+    int k = rand()%4;
+    movePuzzle(m,k);
 }
