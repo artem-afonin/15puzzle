@@ -41,7 +41,7 @@ Gamewindow::Gamewindow()
     puzzle[3][3].sprite.setTexture(gameNullTexture);
     puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
 
-    for (int i=0;i<100;i++) {
+    for (int i=0;i<800;i++) {
         mixPuzzle();
     }
 }
