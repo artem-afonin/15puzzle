@@ -30,8 +30,7 @@ Gamewindow::Gamewindow()
     {
         for (int j = 0; j < 4; j++)
         {
-            puzzle[i][j].number = count + 1;
-            puzzle[i][j].position = count + 1;
+            puzzle[i][j].number = puzzle[i][j].position = count + 1;
             puzzle[i][j].sprite.setTexture(gameBoardBigTexture);
             puzzle[i][j].sprite.setTextureRect(IntRect(115 * count++, 0, 115, 115));
         }
@@ -41,7 +40,7 @@ Gamewindow::Gamewindow()
     puzzle[3][3].sprite.setTexture(gameNullTexture);
     puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
 
-    for (int i=0;i<1000;i++) {
+    for (int i=0;i<800;i++) {
         mixPuzzle();
     }
 }
