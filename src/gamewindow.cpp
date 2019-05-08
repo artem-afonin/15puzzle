@@ -5,6 +5,7 @@
 #include "gamewindow.hpp"
 
 using namespace sf;
+using namespace std;
 
 int y_null = 3, x_null = 3;//координаты пустой клетки
 
@@ -30,8 +31,7 @@ Gamewindow::Gamewindow()
     {
         for (int j = 0; j < 4; j++)
         {
-            puzzle[i][j].number = count + 1;
-            puzzle[i][j].position = count + 1;
+            puzzle[i][j].number = puzzle[i][j].position = count + 1;
             puzzle[i][j].sprite.setTexture(gameBoardBigTexture);
             puzzle[i][j].sprite.setTextureRect(IntRect(115 * count++, 0, 115, 115));
         }
@@ -40,6 +40,10 @@ Gamewindow::Gamewindow()
     gameNullTexture.loadFromFile("texture/nullImage.png");// текстура пустой области
     puzzle[3][3].sprite.setTexture(gameNullTexture);
     puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
+
+    for (int i=0;i<800;i++) {
+        mixPuzzle();
+    }
 }
 
 int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
@@ -74,6 +78,7 @@ int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
                         if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(Mouse::getPosition(window)))
                         {
                             movePuzzle(i, j);
+                            checkPuzzle();
                         }
                     }
                 }
@@ -166,4 +171,27 @@ void Gamewindow::movePuzzle(int i, int j)
                     }
                     else return;
                }
+}
+
+void Gamewindow::mixPuzzle()
+{
+    int m = rand()%4;
+    int k = rand()%4;
+    movePuzzle(m,k);
+}
+
+void Gamewindow::checkPuzzle()
+{
+    for (int m = 0; m < 4; m++)
+    {
+        for (int k = 0; k < 4; k++)
+        {
+            if (puzzle[m][k].number != puzzle[m][k].position)
+            {
+                return;
+            }
+        }
+    }
+    exit(4);
+    // тут то, что будет происходить после победы игрока
 }
