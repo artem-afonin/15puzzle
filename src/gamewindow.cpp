@@ -5,6 +5,7 @@
 #include "gamewindow.hpp"
 
 using namespace sf;
+using namespace std;
 
 int y_null = 3, x_null = 3;//координаты пустой клетки
 
@@ -40,7 +41,7 @@ Gamewindow::Gamewindow()
     puzzle[3][3].sprite.setTexture(gameNullTexture);
     puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
 
-    for (int i=0;i<800;i++) {
+    for (int i=0;i<100;i++) {
         mixPuzzle();
     }
 }
@@ -77,6 +78,7 @@ int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
                         if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(Mouse::getPosition(window)))
                         {
                             movePuzzle(i, j);
+                            checkPuzzle();
                         }
                     }
                 }
@@ -176,4 +178,20 @@ void Gamewindow::mixPuzzle()
     int m = rand()%4;
     int k = rand()%4;
     movePuzzle(m,k);
+}
+
+void Gamewindow::checkPuzzle()
+{
+    for (int m = 0; m < 4; m++)
+    {
+        for (int k = 0; k < 4; k++)
+        {
+            if (puzzle[m][k].number != puzzle[m][k].position)
+            {
+                return;
+            }
+        }
+    }
+    exit(4);
+    // тут то, что будет происходить после победы игрока
 }

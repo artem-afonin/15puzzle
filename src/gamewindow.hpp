@@ -34,6 +34,7 @@ int y_null = 3, x_null = 3;//координаты пустой клетки
     void drawBoard(RenderWindow &window, int gameDifficulty);
     void movePuzzle(int i, int j);
     void mixPuzzle();
+    void checkPuzzle();
 public:
     Gamewindow();
 
