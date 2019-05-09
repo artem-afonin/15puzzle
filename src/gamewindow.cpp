@@ -5,7 +5,6 @@
 #include "gamewindow.hpp"
 
 using namespace sf;
-using namespace std;
 
 int y_null = 3, x_null = 3;//координаты пустой клетки
 
