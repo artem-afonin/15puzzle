@@ -7,6 +7,7 @@
 using namespace sf;
 
 static bool win = false;
+extern bool debug;
 
 Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     :y_null(3), x_null(3)
@@ -56,9 +57,13 @@ int Gamewindow::draw(RenderWindow &window)
     std::ostringstream gameTimeString;
     Clock gameTime;
 
-    for (int i = 0; i < 800; i++) {
+    int mixAmount;
+    if (debug)
+        mixAmount = 2;
+    else
+        mixAmount = 800;
+    for (int i = 0; i < mixAmount; i++)
         mixPuzzle();
-    }
 
     Event event;
 
@@ -89,7 +94,8 @@ int Gamewindow::draw(RenderWindow &window)
                             {
                                 win = true;
                                 textbox.setFont(font);
-                                textbox.setCharacterSize(30);
+                                textbox.setPosition(Vector2f(50, 500));
+                                textbox.setBoxSize(Vector2f(500, 50));
                             }
                         }
                     }
@@ -105,19 +111,20 @@ int Gamewindow::draw(RenderWindow &window)
         gameTimeString.str("");
 
         window.clear(gameBackground);
-        window.draw(exitButton);
-        window.draw(gameTimeText);
-        drawBoard(window, gameDifficulty);
 
-        if (win)
+        if (!win)
+        {
+            window.draw(exitButton);
+            window.draw(gameTimeText);
+        }
+        else
         {
             window.draw(textbox.drawBox());
             window.draw(textbox.drawText());
         }
 
+        drawBoard(window, gameDifficulty);
         window.display();
-
-
     }
 }
 

@@ -1,6 +1,6 @@
 #include "textbox.hpp"
 
-static uint stringMaxLength = 20;
+static uint stringMaxLength = 15;
 
 Textbox::Textbox()
 {
@@ -10,7 +10,7 @@ Textbox::Textbox()
 
     textCharacterSize = 24;
     text.setFillColor(Color::Black);
-    text.setString("");
+    text.setString("test_text_123");
     text.setCharacterSize(textCharacterSize);
 
     boxWidth = 200;
@@ -47,7 +47,7 @@ bool Textbox::setString(String string)
     return true;
 }
 
-void Textbox::setFont(Font font)
+void Textbox::setFont(Font &font)
 {
     this->text.setFont(font);
 }
@@ -60,11 +60,13 @@ void Textbox::setCharacterSize(uint textCharacterSize)
 void Textbox::setBoxSize(Vector2f boxSize)
 {
     this->box.setSize(boxSize);
+    this->text.setCharacterSize((unsigned int)boxSize.y);
 }
 
 void Textbox::setPosition(Vector2f position)
 {
     this->box.setPosition(position);
+    this->text.setPosition(position.x, position.y - 5);
 }
 
 Text Textbox::drawText()

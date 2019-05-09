@@ -31,7 +31,7 @@ public:
     String getString();
 
     bool setString(String string);
-    void setFont(Font font);
+    void setFont(Font &font);
     void setCharacterSize(uint textCharacterSize);
     void setBoxSize(Vector2f boxSize);
     void setPosition(Vector2f position);
