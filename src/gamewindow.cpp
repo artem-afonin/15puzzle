@@ -44,9 +44,7 @@ Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     puzzle[3][3].sprite.setTexture(gameNullTexture);
     puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
 
-    for (int i=0;i<800;i++) {
-        mixPuzzle();
-    }
+
 }
 
 int Gamewindow::draw(RenderWindow &window)
@@ -55,6 +53,10 @@ int Gamewindow::draw(RenderWindow &window)
     Color gameBackground(111, 129, 214); // Цвет заднего фона (светло-голубой)
     std::ostringstream gameTimeString;
     Clock gameTime;
+
+    for (int i = 0; i < 800; i++) {
+        mixPuzzle();
+    }
 
     Event event;
 
@@ -89,10 +91,12 @@ int Gamewindow::draw(RenderWindow &window)
         }
 
         colorExitButton(window);
+
         colorPuzzles(Mouse::getPosition(window), gameDifficulty);
         gameTimeString << (int) gameTime.getElapsedTime().asSeconds();
         gameTimeText.setString("Time: " + gameTimeString.str());
         gameTimeString.str("");
+
         window.clear(gameBackground);
         window.draw(exitButton);
         window.draw(gameTimeText);
