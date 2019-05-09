@@ -17,7 +17,7 @@ class Gamewindow
 private:
     // ПЕРЕМЕННЫЕ
     Font font;
-int y_null = 3, x_null = 3;//координаты пустой клетки
+    int y_null = 3, x_null = 3;//координаты пустой клетки
     Text exitButton;
     Text timerText;
     Text gameTimeText;
@@ -28,6 +28,8 @@ int y_null = 3, x_null = 3;//координаты пустой клетки
     Texture gameNullTexture;
     gameCell puzzle[4][4];
 
+    int gameDifficulty, gameImage;
+
     //МЕТОДЫ
     void colorExitButton(RenderWindow &window);
     void colorPuzzles(Vector2i mousePosition, int gameDifficulty);
@@ -36,9 +38,9 @@ int y_null = 3, x_null = 3;//координаты пустой клетки
     void mixPuzzle();
     void checkPuzzle();
 public:
-    Gamewindow();
+    Gamewindow(int gameDifficulty, int gameImage);
 
-    int draw(RenderWindow &window, int gameDifficulty, int gameImage);
+    int draw(RenderWindow &window);
 };
 
 #endif // GAMEWINDOW_HPP

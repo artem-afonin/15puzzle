@@ -8,8 +8,10 @@ using namespace sf;
 
 int y_null = 3, x_null = 3;//координаты пустой клетки
 
-Gamewindow::Gamewindow()
+Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
 {
+    this->gameDifficulty = gameDifficulty;
+    this->gameImage = gameImage;
     font.loadFromFile("texture/font.ttf");
 
     unsigned int characterSize = 40;
@@ -24,7 +26,10 @@ Gamewindow::Gamewindow()
     gameTimeText.setCharacterSize(characterSize);
     gameTimeText.setPosition(400, 520);
 
-    gameBoardBigTexture.loadFromFile("texture/4x4gameboard.png");
+    if (this->gameImage == 1)
+        gameBoardBigTexture.loadFromFile("texture/4x4gameboard.png");
+    else
+        gameBoardBigTexture.loadFromFile("texture/4x4gameboardImage.png");
 
     for (int i = 0, count = 0; i < 4; i++) //заполнение номеров, позиций и текстур
     {
@@ -45,7 +50,7 @@ Gamewindow::Gamewindow()
     }
 }
 
-int Gamewindow::draw(RenderWindow &window, int gameDifficulty, int gameImage)
+int Gamewindow::draw(RenderWindow &window)
 {
     window.setTitle("15-Puzzle GAME");
     Color gameBackground(111, 129, 214); // Цвет заднего фона (светло-голубой)

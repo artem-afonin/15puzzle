@@ -38,8 +38,8 @@ int main()
             mainmenu = NULL;
             break;
         case 1:
-            game = new Gamewindow;
-            programCode = game->draw(window, currentGameDifficulty, currentGameImage);
+            game = new Gamewindow(currentGameDifficulty, currentGameImage);
+            programCode = game->draw(window);
             delete game;
             game = NULL;
             break;
