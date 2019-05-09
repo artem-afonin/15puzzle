@@ -21,6 +21,8 @@ private:
     int menuButtonX;
     int menuButtonY;
     unsigned int menuButtonCharacterSize;
+
+    void colorButtons(Vector2i mousePosition);
 public:
     Mainmenu();
     int draw(RenderWindow &window);
