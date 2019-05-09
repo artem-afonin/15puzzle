@@ -6,9 +6,8 @@
 
 using namespace sf;
 
-int y_null = 3, x_null = 3;//координаты пустой клетки
-
 Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
+    :y_null(3), x_null(3)
 {
     this->gameDifficulty = gameDifficulty;
     this->gameImage = gameImage;

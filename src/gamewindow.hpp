@@ -17,7 +17,7 @@ class Gamewindow
 private:
     // ПЕРЕМЕННЫЕ
     Font font;
-    int y_null = 3, x_null = 3;//координаты пустой клетки
+    int y_null, x_null;//координаты пустой клетки
     Text exitButton;
     Text timerText;
     Text gameTimeText;
