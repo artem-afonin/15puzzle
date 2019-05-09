@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <ctime>
 #include <SFML/Graphics.hpp>
 #include "mainmenu.hpp"
 #include "settings.hpp"
@@ -8,8 +9,10 @@
 
 using namespace sf;
 
+
 int main()
 {
+    srand(time(NULL));
     RenderWindow window(VideoMode(600, 600), "Hello, world!", Style::Close);
     window.setFramerateLimit(20);
 
