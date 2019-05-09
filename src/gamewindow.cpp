@@ -6,6 +6,8 @@
 
 using namespace sf;
 
+static bool win = false;
+
 Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     :y_null(3), x_null(3)
 {
@@ -83,7 +85,12 @@ int Gamewindow::draw(RenderWindow &window)
                         if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(Mouse::getPosition(window)))
                         {
                             movePuzzle(i, j);
-                            checkPuzzle();
+                            if (isPuzzleSolved())
+                            {
+                                win = true;
+                                textbox.setFont(font);
+                                textbox.setCharacterSize(30);
+                            }
                         }
                     }
                 }
@@ -101,6 +108,13 @@ int Gamewindow::draw(RenderWindow &window)
         window.draw(exitButton);
         window.draw(gameTimeText);
         drawBoard(window, gameDifficulty);
+
+        if (win)
+        {
+            window.draw(textbox.drawBox());
+            window.draw(textbox.drawText());
+        }
+
         window.display();
 
 
@@ -187,7 +201,7 @@ void Gamewindow::mixPuzzle()
     movePuzzle(m,k);
 }
 
-void Gamewindow::checkPuzzle()
+bool Gamewindow::isPuzzleSolved()
 {
     for (int m = 0; m < 4; m++)
     {
@@ -195,10 +209,9 @@ void Gamewindow::checkPuzzle()
         {
             if (puzzle[m][k].number != puzzle[m][k].position)
             {
-                return;
+                return false;
             }
         }
     }
-    exit(4);
-    // тут то, что будет происходить после победы игрока
+    return true;
 }
