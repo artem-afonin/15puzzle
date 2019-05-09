@@ -1,6 +1,6 @@
 ![](https://i.ibb.co/tBQ2ttt/repository-open-graph-template.png)
 
-Тестовая сборка [![Build Status](https://travis-ci.org/lertoss/chessviz.svg?branch=master)](https://travis-ci.org/lertoss/chessviz)
+Тестовая сборка [![Build Status](https://travis-ci.org/lertoss/kursovaya-15-puzzle.svg?branch=develop)](https://travis-ci.org/lertoss/kursovaya-15-puzzle)
 ![License](https://img.shields.io/github/license/lertoss/kursovaya-15-puzzle.svg)
 ***
 Курсовой проект по дисциплине Технологии разработки программного обеспечения.
