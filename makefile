@@ -1,7 +1,7 @@
 .PHONY=addDir all clean
 
 CC=g++
-CFLAGS=-Wall -c -Iinclude/
+CFLAGS=-Wall -c -Iinclude/ -std=c++11
 EFLAGS=-Llib/ -lsfml-system -lsfml-window -lsfml-graphics
 
 SRC=src/
