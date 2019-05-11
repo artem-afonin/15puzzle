@@ -6,7 +6,7 @@
 
 using namespace sf;
 
-static bool win = false;
+static bool win;
 extern bool debug;
 
 Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
@@ -47,7 +47,10 @@ Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     puzzle[3][3].sprite.setTexture(gameNullTexture);
     puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
 
-
+    textbox.setFont(font);
+    textbox.setPosition(Vector2f(50, 550));
+    textbox.setBoxSize(Vector2f(500, 40));
+    win = false;
 }
 
 int Gamewindow::draw(RenderWindow &window)
@@ -76,11 +79,15 @@ int Gamewindow::draw(RenderWindow &window)
                 window.close();
                 return -1;
             }
+            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
+                return 0;
+
             if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
             {
                 if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
                 {
-                    return 0;
+                    if (!win)
+                        return 0;
                 }
 
                 for (int i = 0; i < 4; i++)
@@ -91,12 +98,7 @@ int Gamewindow::draw(RenderWindow &window)
                         {
                             movePuzzle(i, j);
                             if (isPuzzleSolved())
-                            {
                                 win = true;
-                                textbox.setFont(font);
-                                textbox.setPosition(Vector2f(50, 500));
-                                textbox.setBoxSize(Vector2f(500, 50));
-                            }
                         }
                     }
                 }
