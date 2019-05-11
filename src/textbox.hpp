@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <fstream>
+#include <string>
 
 using namespace sf;
 using namespace std;
@@ -40,7 +41,11 @@ public:
     void setBoxSize(Vector2f boxSize);
     void setPosition(Vector2f position);
     void setFocus(bool focus);
+    bool isFocus();
     bool setAvailableCharacters(std::string filePath); // допустимые буквы находятся в файле
+    void addChar(char letter);
+    void removeChar();
+    std::string getInput();
 
     Text drawText();
     RectangleShape drawBox();

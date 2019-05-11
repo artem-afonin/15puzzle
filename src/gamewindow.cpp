@@ -63,6 +63,7 @@ int Gamewindow::draw(RenderWindow &window)
     Color gameBackground(111, 129, 214); // Цвет заднего фона (светло-голубой)
     std::ostringstream gameTimeString;
     Clock gameTime;
+    std::string nickname = "";
 
     int mixAmount;
     if (debug)
@@ -111,11 +112,23 @@ int Gamewindow::draw(RenderWindow &window)
                 }
             }
 
-            if (event.type == Event::TextEntered && textbox.isFocus())
+            if (win && textbox.isFocus())
             {
-                if (event.text.unicode < 128)
+                if (event.type == Event::TextEntered)
                 {
-                    // оформить ввод в текстбокс
+                    if (event.text.unicode == 8)
+                    {
+                        textbox.removeChar();
+                    }
+                    else if (event.text.unicode == 13)
+                    {
+                        nickname = textbox.getInput();
+                        std::cout << nickname;
+                    }
+                    else if (event.text.unicode < 128)
+                    {
+                        textbox.addChar((char)event.text.unicode);
+                    }
                 }
             }
         }

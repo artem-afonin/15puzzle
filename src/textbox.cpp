@@ -1,4 +1,5 @@
 #include "textbox.hpp"
+#include <iostream>
 
 static uint stringMaxLength = 15;
 
@@ -10,7 +11,7 @@ Textbox::Textbox()
 
     textCharacterSize = 24;
     text.setFillColor(Color::Black);
-    text.setString("");
+    text.setString(string);
     text.setCharacterSize(textCharacterSize);
 
     boxWidth = 200;
@@ -90,6 +91,36 @@ bool Textbox::setAvailableCharacters(std::string filePath)
         file >> availableCharacters[i];
     file.close();
     return true;
+}
+
+void Textbox::addChar(char letter)
+{
+    bool flag = false;
+    for (int i = 0; i < 64; i++)
+    {
+        if (letter == availableCharacters[i])
+            flag = true;
+    }
+
+    if (flag)
+    {
+        this->string += letter;
+    }
+
+    this->text.setString(string);
+}
+
+void Textbox::removeChar()
+{
+    if (!this->string.isEmpty())
+        this->string.erase(this->string.getSize() - 1);
+
+    this->text.setString(string);
+}
+
+std::string Textbox::getInput()
+{
+    return this->string.toAnsiString();
 }
 
 Text Textbox::drawText()
