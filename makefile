@@ -12,6 +12,7 @@ SOURCE2=$(SRC)mainmenu.cpp
 SOURCE3=$(SRC)settings.cpp
 SOURCE4=$(SRC)rules.cpp
 SOURCE5=$(SRC)gamewindow.cpp
+SOURCE6=$(SRC)textbox.cpp
 
 OBJ1T=$(subst $(SRC),$(BUILD),$(SOURCE1))
 OBJ1=$(OBJ1T:.cpp=.o)
@@ -28,15 +29,20 @@ OBJ4=$(OBJ4T:.cpp=.o)
 OBJ5T=$(subst $(SRC),$(BUILD),$(SOURCE5))
 OBJ5=$(OBJ5T:.cpp=.o)
 
+OBJ6T=$(subst $(SRC),$(BUILD),$(SOURCE6))
+OBJ6=$(OBJ6T:.cpp=.o)
+
 
 EXECUTABLE=bin/main
 
-all: addDir $(EXECUTABLE) clean
+all: addDir $(EXECUTABLE)
+
+remake: clean all
 
 addDir:
 	mkdir -p build/ bin/
 
-$(EXECUTABLE): $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5)
+$(EXECUTABLE): $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6)
 	$(CC) $^ $(EFLAGS) -o $@
 
 $(OBJ1): $(SOURCE1)
@@ -52,6 +58,9 @@ $(OBJ4): $(SOURCE4)
 	$(CC) $^ $(CFLAGS) -o $@
 
 $(OBJ5): $(SOURCE5)
+	$(CC) $^ $(CFLAGS) -o $@
+
+$(OBJ6): $(SOURCE6)
 	$(CC) $^ $(CFLAGS) -o $@
 
 clean:

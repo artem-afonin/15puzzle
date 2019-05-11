@@ -1,7 +1,13 @@
 #ifndef GAMEWINDOW_HPP
 #define GAMEWINDOW_HPP
 
+#include <sstream>
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <fstream>
 #include <SFML/Graphics.hpp>
+#include "textbox.hpp"
 
 using namespace sf;
 
@@ -30,13 +36,16 @@ private:
 
     int gameDifficulty, gameImage;
 
+    Textbox textbox;
+
     //МЕТОДЫ
     void colorExitButton(RenderWindow &window);
     void colorPuzzles(Vector2i mousePosition, int gameDifficulty);
     void drawBoard(RenderWindow &window, int gameDifficulty);
     void movePuzzle(int i, int j);
     void mixPuzzle();
-    void checkPuzzle();
+    bool isPuzzleSolved();
+    void savePlayerRecord(std::string playerName, int seconds);
 public:
     Gamewindow(int gameDifficulty, int gameImage);
 

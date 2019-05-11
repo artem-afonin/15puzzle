@@ -1,5 +1,7 @@
 #include <cstdlib>
 #include <iostream>
+#include <ctime>
+#include <cstring>
 #include <SFML/Graphics.hpp>
 #include "mainmenu.hpp"
 #include "settings.hpp"
@@ -8,8 +10,16 @@
 
 using namespace sf;
 
-int main()
+bool debug = false;
+
+int main(int argc, char* argv[])
 {
+    srand(time(NULL));
+
+    if (argc > 1) // включить дебаг режим
+        if (strcmp(argv[1], "-d") == 0)
+            debug = true;
+
     RenderWindow window(VideoMode(600, 600), "Hello, world!", Style::Close);
     window.setFramerateLimit(30);
 

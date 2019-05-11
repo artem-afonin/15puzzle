@@ -1,10 +1,12 @@
-#include <sstream>
-#include <iostream>
-#include <math.h>
 #include <SFML/Graphics.hpp>
 #include "gamewindow.hpp"
 
 using namespace sf;
+
+static bool win;
+extern bool debug;
+std::string TextboxSymbolsFilepath = "data/availableNameSymbols.txt";
+std::string playerRecordsFilepath  = "data/playerRecords.txt";
 
 Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     :y_null(3), x_null(3)
@@ -44,7 +46,13 @@ Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     puzzle[3][3].sprite.setTexture(gameNullTexture);
     puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
 
-
+    textbox.setFont(font);
+    textbox.setPosition(Vector2f(50, 550));
+    textbox.setBoxSize(Vector2f(500, 40));
+    if (!textbox.setAvailableCharacters(TextboxSymbolsFilepath))
+        exit(1);
+    win = false;
+    textbox.setFocus(false);
 }
 
 int Gamewindow::draw(RenderWindow &window)
@@ -53,10 +61,16 @@ int Gamewindow::draw(RenderWindow &window)
     Color gameBackground(111, 129, 214); // Цвет заднего фона (светло-голубой)
     std::ostringstream gameTimeString;
     Clock gameTime;
+    int time = 0;
+    std::string nickname = "";
 
-    for (int i = 0; i < 800; i++) {
+    int mixAmount;
+    if (debug)
+        mixAmount = 2;
+    else
+        mixAmount = 800;
+    for (int i = 0; i < mixAmount; i++)
         mixPuzzle();
-    }
 
     Event event;
 
@@ -69,11 +83,15 @@ int Gamewindow::draw(RenderWindow &window)
                 window.close();
                 return -1;
             }
+            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
+                return 0;
+
             if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
             {
                 if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
                 {
-                    return 0;
+                    if (!win)
+                        return 0;
                 }
 
                 for (int i = 0; i < 4; i++)
@@ -83,8 +101,34 @@ int Gamewindow::draw(RenderWindow &window)
                         if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(Mouse::getPosition(window)))
                         {
                             movePuzzle(i, j);
-                            checkPuzzle();
+                            if (isPuzzleSolved())
+                            {
+                                win = true;
+                                time = (int) gameTime.getElapsedTime().asSeconds();
+                                textbox.setFocus(true);
+                            }
                         }
+                    }
+                }
+            }
+
+            if (win && textbox.isFocus())
+            {
+                if (event.type == Event::TextEntered)
+                {
+                    if (event.text.unicode == 8)
+                    {
+                        textbox.removeChar();
+                    }
+                    else if (event.text.unicode == 13 && !textbox.isInputEmpty())
+                    {
+                        nickname = textbox.getInput();
+                        savePlayerRecord(nickname, time);
+                        return 0;
+                    }
+                    else if (event.text.unicode < 128)
+                    {
+                        textbox.addChar((char)event.text.unicode);
                     }
                 }
             }
@@ -98,12 +142,20 @@ int Gamewindow::draw(RenderWindow &window)
         gameTimeString.str("");
 
         window.clear(gameBackground);
-        window.draw(exitButton);
-        window.draw(gameTimeText);
+
+        if (!win)
+        {
+            window.draw(exitButton);
+            window.draw(gameTimeText);
+        }
+        else
+        {
+            window.draw(textbox.drawBox());
+            window.draw(textbox.drawText());
+        }
+
         drawBoard(window, gameDifficulty);
         window.display();
-
-
     }
 }
 
@@ -187,7 +239,7 @@ void Gamewindow::mixPuzzle()
     movePuzzle(m,k);
 }
 
-void Gamewindow::checkPuzzle()
+bool Gamewindow::isPuzzleSolved()
 {
     for (int m = 0; m < 4; m++)
     {
@@ -195,10 +247,19 @@ void Gamewindow::checkPuzzle()
         {
             if (puzzle[m][k].number != puzzle[m][k].position)
             {
-                return;
+                return false;
             }
         }
     }
-    exit(4);
-    // тут то, что будет происходить после победы игрока
+    return true;
+}
+
+void Gamewindow::savePlayerRecord(std::string playerName, int seconds)
+{
+    std::ofstream file;
+    file.open(playerRecordsFilepath, std::ios::app);
+    if (!file.is_open())
+        exit(1);
+    file << playerName << ":" << seconds << '\n';
+    file.close();
 }
