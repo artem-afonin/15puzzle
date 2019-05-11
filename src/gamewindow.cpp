@@ -120,7 +120,7 @@ int Gamewindow::draw(RenderWindow &window)
                     {
                         textbox.removeChar();
                     }
-                    else if (event.text.unicode == 13)
+                    else if (event.text.unicode == 13 && !textbox.isInputEmpty())
                     {
                         nickname = textbox.getInput();
                         std::cout << nickname;

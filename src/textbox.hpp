@@ -45,6 +45,7 @@ public:
     bool setAvailableCharacters(std::string filePath); // допустимые буквы находятся в файле
     void addChar(char letter);
     void removeChar();
+    bool isInputEmpty();
     std::string getInput();
 
     Text drawText();

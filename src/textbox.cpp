@@ -102,7 +102,7 @@ void Textbox::addChar(char letter)
             flag = true;
     }
 
-    if (flag)
+    if (flag && this->string.getSize() < stringMaxLength)
     {
         this->string += letter;
     }
@@ -116,6 +116,13 @@ void Textbox::removeChar()
         this->string.erase(this->string.getSize() - 1);
 
     this->text.setString(string);
+}
+
+bool Textbox::isInputEmpty()
+{
+    if (this->string.getSize() > 0)
+        return false;
+    return true;
 }
 
 std::string Textbox::getInput()
