@@ -8,6 +8,7 @@ using namespace sf;
 
 static bool win;
 extern bool debug;
+std::string TextboxSymbolsFilepath = "data/availableNameSymbols.txt";
 
 Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     :y_null(3), x_null(3)
@@ -50,6 +51,8 @@ Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     textbox.setFont(font);
     textbox.setPosition(Vector2f(50, 550));
     textbox.setBoxSize(Vector2f(500, 40));
+    if (!textbox.setAvailableCharacters(TextboxSymbolsFilepath))
+        exit(1);
     win = false;
 }
 

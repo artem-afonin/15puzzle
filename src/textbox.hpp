@@ -2,8 +2,10 @@
 #define TEXTBOX_HPP
 
 #include <SFML/Graphics.hpp>
+#include <fstream>
 
 using namespace sf;
+using namespace std;
 
 typedef unsigned int uint;
 
@@ -20,6 +22,7 @@ private:
     float boxHeight;
     Vector2f boxSize;
     uint textCharacterSize;
+    char* availableCharacters;
 
 
     // МЕТОДЫ
@@ -27,6 +30,7 @@ private:
 public:
     Textbox();
     Textbox(float boxWidth, float boxHeight);
+    ~Textbox();
 
     String getString();
 
@@ -35,6 +39,8 @@ public:
     void setCharacterSize(uint textCharacterSize);
     void setBoxSize(Vector2f boxSize);
     void setPosition(Vector2f position);
+    void setFocus(bool focus);
+    bool setAvailableCharacters(std::string filePath); // допустимые буквы находятся в файле
 
     Text drawText();
     RectangleShape drawBox();

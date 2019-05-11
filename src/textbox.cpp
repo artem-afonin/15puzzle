@@ -10,7 +10,7 @@ Textbox::Textbox()
 
     textCharacterSize = 24;
     text.setFillColor(Color::Black);
-    text.setString("test_text_123");
+    text.setString("");
     text.setCharacterSize(textCharacterSize);
 
     boxWidth = 200;
@@ -69,6 +69,24 @@ void Textbox::setPosition(Vector2f position)
     this->text.setPosition(position.x, position.y - 5);
 }
 
+void Textbox::setFocus(bool focus)
+{
+    this->focus = focus;
+}
+
+bool Textbox::setAvailableCharacters(std::string filePath)
+{
+    availableCharacters = new char[64];
+    std::ifstream file;
+    file.open(filePath);
+    if (!file.is_open())
+        return false;
+    for (int i = 0; i < 64; i++)
+        file >> availableCharacters[i];
+    file.close();
+    return true;
+}
+
 Text Textbox::drawText()
 {
     return this->text;
@@ -77,4 +95,10 @@ Text Textbox::drawText()
 RectangleShape Textbox::drawBox()
 {
     return this->box;
+}
+
+Textbox::~Textbox()
+{
+    delete availableCharacters;
+    availableCharacters = NULL;
 }
