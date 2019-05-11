@@ -54,6 +54,7 @@ Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     if (!textbox.setAvailableCharacters(TextboxSymbolsFilepath))
         exit(1);
     win = false;
+    textbox.setFocus(false);
 }
 
 int Gamewindow::draw(RenderWindow &window)
@@ -101,9 +102,20 @@ int Gamewindow::draw(RenderWindow &window)
                         {
                             movePuzzle(i, j);
                             if (isPuzzleSolved())
+                            {
                                 win = true;
+                                textbox.setFocus(true);
+                            }
                         }
                     }
+                }
+            }
+
+            if (event.type == Event::TextEntered && textbox.isFocus())
+            {
+                if (event.text.unicode < 128)
+                {
+                    // оформить ввод в текстбокс
                 }
             }
         }

@@ -74,6 +74,11 @@ void Textbox::setFocus(bool focus)
     this->focus = focus;
 }
 
+bool Textbox::isFocus()
+{
+    return this->focus;
+}
+
 bool Textbox::setAvailableCharacters(std::string filePath)
 {
     availableCharacters = new char[64];
