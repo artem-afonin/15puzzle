@@ -1,6 +1,11 @@
 #ifndef GAMEWINDOW_HPP
 #define GAMEWINDOW_HPP
 
+#include <sstream>
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 #include "textbox.hpp"
 
@@ -40,6 +45,7 @@ private:
     void movePuzzle(int i, int j);
     void mixPuzzle();
     bool isPuzzleSolved();
+    void savePlayerRecord(std::string playerName, int seconds);
 public:
     Gamewindow(int gameDifficulty, int gameImage);
 

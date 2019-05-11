@@ -6,7 +6,6 @@
 #include <string>
 
 using namespace sf;
-using namespace std;
 
 typedef unsigned int uint;
 

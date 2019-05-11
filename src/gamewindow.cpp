@@ -1,6 +1,3 @@
-#include <sstream>
-#include <iostream>
-#include <math.h>
 #include <SFML/Graphics.hpp>
 #include "gamewindow.hpp"
 
@@ -9,6 +6,7 @@ using namespace sf;
 static bool win;
 extern bool debug;
 std::string TextboxSymbolsFilepath = "data/availableNameSymbols.txt";
+std::string playerRecordsFilepath  = "data/playerRecords.txt";
 
 Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     :y_null(3), x_null(3)
@@ -63,6 +61,7 @@ int Gamewindow::draw(RenderWindow &window)
     Color gameBackground(111, 129, 214); // Цвет заднего фона (светло-голубой)
     std::ostringstream gameTimeString;
     Clock gameTime;
+    int time = 0;
     std::string nickname = "";
 
     int mixAmount;
@@ -105,6 +104,7 @@ int Gamewindow::draw(RenderWindow &window)
                             if (isPuzzleSolved())
                             {
                                 win = true;
+                                time = (int) gameTime.getElapsedTime().asSeconds();
                                 textbox.setFocus(true);
                             }
                         }
@@ -123,7 +123,8 @@ int Gamewindow::draw(RenderWindow &window)
                     else if (event.text.unicode == 13 && !textbox.isInputEmpty())
                     {
                         nickname = textbox.getInput();
-                        std::cout << nickname;
+                        savePlayerRecord(nickname, time);
+                        return 0;
                     }
                     else if (event.text.unicode < 128)
                     {
@@ -251,4 +252,14 @@ bool Gamewindow::isPuzzleSolved()
         }
     }
     return true;
+}
+
+void Gamewindow::savePlayerRecord(std::string playerName, int seconds)
+{
+    std::ofstream file;
+    file.open(playerRecordsFilepath, std::ios::app);
+    if (!file.is_open())
+        exit(1);
+    file << playerName << ":" << seconds << '\n';
+    file.close();
 }
