@@ -64,4 +64,4 @@ $(OBJ6): $(SOURCE6)
 	$(CC) $^ $(CFLAGS) -o $@
 
 clean:
-	rm -rf */*.o
+	rm -rf */*.o data/playerRecords.txt
