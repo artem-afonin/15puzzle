@@ -23,6 +23,19 @@ Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     exitButton.setPosition(20, 520);
     exitButton.setOutlineColor(Color::Red);
 
+    for (Text &z : winInfoText)
+    {
+        z.setFont(font);
+        z.setCharacterSize(24);
+    }
+
+    winInfoText[0].setFillColor(Color(120, 255, 40));
+    winInfoText[0].setString("YOU WON!   Input nickname:");
+    winInfoText[0].setPosition(25, 500);
+    winInfoText[1].setFillColor(Color(40, 255, 120));
+    winInfoText[1].setString("Your time: ");
+    winInfoText[1].setPosition(380, 500);
+
     gameTimeText.setFont(font);
     gameTimeText.setCharacterSize(characterSize);
     gameTimeText.setPosition(400, 520);
@@ -104,7 +117,10 @@ int Gamewindow::draw(RenderWindow &window)
                             if (isPuzzleSolved())
                             {
                                 win = true;
-                                time = (int) gameTime.getElapsedTime().asSeconds();
+                                time = gameTime.getElapsedTime().asSeconds();
+                                std::string outputTime = winInfoText[1].getString().toAnsiString();
+                                outputTime += std::to_string(time);
+                                winInfoText[1].setString(outputTime);
                                 textbox.setFocus(true);
                             }
                         }
@@ -152,6 +168,8 @@ int Gamewindow::draw(RenderWindow &window)
         {
             window.draw(textbox.drawBox());
             window.draw(textbox.drawText());
+            for (Text &z : winInfoText)
+                window.draw(z);
         }
 
         drawBoard(window, gameDifficulty);
@@ -260,6 +278,6 @@ void Gamewindow::savePlayerRecord(std::string playerName, int seconds)
     file.open(playerRecordsFilepath, std::ios::app);
     if (!file.is_open())
         exit(1);
-    file << playerName << ":" << seconds << '\n';
+    file << playerName << ":" << (int)seconds << '\n';
     file.close();
 }

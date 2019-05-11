@@ -27,6 +27,7 @@ private:
     Text exitButton;
     Text timerText;
     Text gameTimeText;
+    Text winInfoText[2];
 
     Clock gameTimeClock;
 
