@@ -43,9 +43,9 @@ private:
     void colorExitButton(RenderWindow &window);
     void colorPuzzles(Vector2i mousePosition, int gameDifficulty);
     void drawBoard(RenderWindow &window, int gameDifficulty);
-    void movePuzzle(int i, int j);
-    void mixPuzzle();
-    bool isPuzzleSolved();
+    void movePuzzle(int i, int j, int gameDifficulty);
+    void mixPuzzle(int gameDifficulty);
+    bool isPuzzleSolved(int gameDifficulty);
     void savePlayerRecord(std::string playerName, int seconds);
 public:
     Gamewindow(int gameDifficulty, int gameImage);

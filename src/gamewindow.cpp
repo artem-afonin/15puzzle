@@ -9,13 +9,23 @@ std::string TextboxSymbolsFilepath = "data/availableNameSymbols.txt";
 std::string playerRecordsFilepath  = "data/playerRecords.txt";
 
 Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
-    :y_null(3), x_null(3)
 {
     this->gameDifficulty = gameDifficulty;
     this->gameImage = gameImage;
+
     font.loadFromFile("texture/font.ttf");
 
     unsigned int characterSize = 40;
+
+    if (gameDifficulty == 2)
+    {
+        y_null = 3;
+        x_null = 3;
+    }
+    else {
+        y_null = 2;
+        x_null = 2;
+    }
 
     exitButton.setFont(font);
     exitButton.setCharacterSize(characterSize);
@@ -45,19 +55,35 @@ Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     else
         gameBoardBigTexture.loadFromFile("texture/4x4gameboardImage.png");
 
-    for (int i = 0, count = 0; i < 4; i++) //заполнение номеров, позиций и текстур
+    if (gameDifficulty == 2)
     {
-        for (int j = 0; j < 4; j++)
+        for (int i = 0, count = 0; i < 4; i++) //заполнение номеров, позиций и текстур
         {
-            puzzle[i][j].number = puzzle[i][j].position = count + 1;
-            puzzle[i][j].sprite.setTexture(gameBoardBigTexture);
-            puzzle[i][j].sprite.setTextureRect(IntRect(115 * count++, 0, 115, 115));
+            for (int j = 0; j < 4; j++)
+            {
+                puzzle[i][j].number = puzzle[i][j].position = count + 1;
+                puzzle[i][j].sprite.setTexture(gameBoardBigTexture);
+                puzzle[i][j].sprite.setTextureRect(IntRect(115 * count++, 0, 115, 115));
+            }
         }
+        gameNullTexture.loadFromFile("texture/nullImage.png");// текстура пустой области
+        puzzle[3][3].sprite.setTexture(gameNullTexture);
+        puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
     }
-
-    gameNullTexture.loadFromFile("texture/nullImage.png");// текстура пустой области
-    puzzle[3][3].sprite.setTexture(gameNullTexture);
-    puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
+    else {
+        for (int i = 0, count = 0; i < 3; i++) //заполнение номеров, позиций и текстур
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                puzzle[i][j].number = puzzle[i][j].position = count + 1;
+                puzzle[i][j].sprite.setTexture(gameBoardBigTexture);
+                puzzle[i][j].sprite.setTextureRect(IntRect(115 * count++, 0, 115, 115));
+            }
+        }
+        gameNullTexture.loadFromFile("texture/nullImage.png");// текстура пустой области
+        puzzle[2][2].sprite.setTexture(gameNullTexture);
+        puzzle[2][2].sprite.setTextureRect(IntRect(0, 0, 115, 115));
+    }
 
     textbox.setFont(font);
     textbox.setPosition(Vector2f(50, 550));
@@ -83,7 +109,7 @@ int Gamewindow::draw(RenderWindow &window)
     else
         mixAmount = 800;
     for (int i = 0; i < mixAmount; i++)
-        mixPuzzle();
+        mixPuzzle(gameDifficulty);
 
     Event event;
 
@@ -113,8 +139,8 @@ int Gamewindow::draw(RenderWindow &window)
                     {
                         if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(Mouse::getPosition(window)))
                         {
-                            movePuzzle(i, j);
-                            if (isPuzzleSolved())
+                            movePuzzle(i, j, gameDifficulty);
+                            if (isPuzzleSolved(gameDifficulty))
                             {
                                 win = true;
                                 time = gameTime.getElapsedTime().asSeconds();
@@ -208,6 +234,22 @@ void Gamewindow::colorPuzzles(Vector2i mousePosition, int gameDifficulty)
             }
         }
     }
+    else {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (IntRect(puzzle[i][j].sprite.getGlobalBounds()).contains(mousePosition))
+                {
+                    puzzle[i][j].sprite.setColor(Color::Red);
+                }
+                else
+                {
+                    puzzle[i][j].sprite.setColor(Color::White);
+                }
+            }
+        }
+    }
 }
 
 void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
@@ -229,10 +271,26 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
             }
         }
     }
+    else {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (puzzle[i][j].position != 0 )
+                {
+                    dx = 115 * ((puzzle[i][j].position - 1) % 3);
+                    dy = 115 * ((puzzle[i][j].position - 1) / 3);
+                    puzzle[i][j].sprite.setPosition(125 + dx, 90 + dy);
+                    window.draw(puzzle[i][j].sprite);
+                }
+            }
+        }
+    }
 }
 
-void Gamewindow::movePuzzle(int i, int j)
+void Gamewindow::movePuzzle(int i, int j, int gameDifficulty)
 {
+    if (gameDifficulty == 2)
     {
         int y_zero = (puzzle[x_null][y_null].position - 1)/4;
         int x_zero = (puzzle[x_null][y_null].position - 1)%4;
@@ -248,28 +306,67 @@ void Gamewindow::movePuzzle(int i, int j)
         }
         else return;
     }
-}
+    else {
+        int y_zero = (puzzle[x_null][y_null].position - 1)/3;
+        int x_zero = (puzzle[x_null][y_null].position - 1)%3;
 
-void Gamewindow::mixPuzzle()
-{
-    int m = rand()%4;
-    int k = rand()%4;
-    movePuzzle(m,k);
-}
+        int y = (puzzle[i][j].position - 1)/3;
+        int x = (puzzle[i][j].position - 1)%3;
 
-bool Gamewindow::isPuzzleSolved()
-{
-    for (int m = 0; m < 4; m++)
-    {
-        for (int k = 0; k < 4; k++)
+        if ((abs(y_zero - y)) + (abs(x_zero - x)) == 1)
         {
-            if (puzzle[m][k].number != puzzle[m][k].position)
+            int temp = puzzle[x_null][y_null].position;
+            puzzle[x_null][y_null].position = puzzle[i][j].position;
+            puzzle[i][j].position = temp;
+        }
+        else return;
+    }
+}
+
+void Gamewindow::mixPuzzle(int gameDifficulty)
+{
+    if (gameDifficulty == 2)
+    {
+        int m = rand()%4;
+        int k = rand()%4;
+        movePuzzle(m,k,gameDifficulty);
+    }
+    else {
+        int m = rand()%3;
+        int k = rand()%3;
+        movePuzzle(m,k,gameDifficulty);
+    }
+}
+
+bool Gamewindow::isPuzzleSolved(int gameDifficulty)
+{
+    if (gameDifficulty == 2)
+    {
+        for (int m = 0; m < 4; m++)
+        {
+            for (int k = 0; k < 4; k++)
             {
-                return false;
+                if (puzzle[m][k].number != puzzle[m][k].position)
+                {
+                    return false;
+                }
             }
         }
+        return true;
     }
-    return true;
+    else {
+        for (int m = 0; m < 3; m++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                if (puzzle[m][k].number != puzzle[m][k].position)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
 
 void Gamewindow::savePlayerRecord(std::string playerName, int seconds)
