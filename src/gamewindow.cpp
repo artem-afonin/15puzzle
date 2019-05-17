@@ -50,10 +50,12 @@ Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
     gameTimeText.setCharacterSize(characterSize);
     gameTimeText.setPosition(400, 520);
 
-    if (this->gameImage == 1)
-        gameBoardBigTexture.loadFromFile("texture/4x4gameboard.png");
-    else
+    if (gameImage == 2 && gameDifficulty == 2)
         gameBoardBigTexture.loadFromFile("texture/4x4gameboardImage.png");
+    if (gameImage == 1)
+        gameBoardBigTexture.loadFromFile("texture/4x4gameboard.png");
+    if (gameImage == 2 && gameDifficulty == 1)
+        gameBoardBigTexture.loadFromFile("texture/3x3.png");
 
     if (gameDifficulty == 2)
     {
@@ -71,7 +73,7 @@ Gamewindow::Gamewindow(int gameDifficulty, int gameImage)
         puzzle[3][3].sprite.setTextureRect(IntRect(0, 0, 115, 115));
     }
     else {
-        for (int i = 0, count = 0; i < 3; i++) //заполнение номеров, позиций и текстур
+        for (int i = 0, count = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
