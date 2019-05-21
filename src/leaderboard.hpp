@@ -14,7 +14,7 @@ private:
     Text leaderboardText[5];
 
     //МЕТОДЫ
-
+    void fillLeaderboardText();
 public:
     Leaderboard();
 
