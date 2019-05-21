@@ -328,7 +328,11 @@ void Gamewindow::savePlayerRecord(std::string playerName, int seconds)
     std::ifstream checkFile;
     checkFile.open(playerRecordsFilepath, std::ios::in);
     if (!checkFile.is_open())
-        exit(1);
+    {
+        file.open(playerRecordsFilepath, std::ios::out);
+        file.close();
+        checkFile.open(playerRecordsFilepath, std::ios::in);
+    }
     std::vector <std::string> fileStrings(0);
     std::string input;
 
