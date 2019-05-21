@@ -16,6 +16,7 @@ private:
 
     //МЕТОДЫ
     void fillLeaderboardText();
+    void colorButtons(Vector2i mousePosition);
 public:
     Leaderboard();
 

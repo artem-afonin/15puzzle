@@ -71,6 +71,8 @@ int Leaderboard::draw(RenderWindow &window)
             }
         }
 
+        colorButtons(Mouse::getPosition(window));
+
         window.clear(gameBackground);
         window.draw(exitButton);
         window.draw(resetButton);
@@ -112,5 +114,29 @@ void Leaderboard::fillLeaderboardText()
     for (size_t z = 0; z < players.size(); z++)
     {
         leaderboardText[z].setString(players[z] + " sec");
+    }
+}
+
+void Leaderboard::colorButtons(Vector2i mousePosition)
+{
+    if (IntRect(exitButton.getGlobalBounds()).contains(mousePosition))
+    {
+        exitButton.setOutlineThickness(2.f);
+    }
+    else
+    {
+        exitButton.setOutlineThickness(0.f);
+    }
+
+    if (IntRect(resetButton.getGlobalBounds()).contains(mousePosition))
+    {
+        if (resetButton.getFillColor() != Color::Black)
+        {
+            resetButton.setOutlineThickness(2.f);
+        }
+    }
+    else
+    {
+        resetButton.setOutlineThickness(0.f);
     }
 }
