@@ -34,13 +34,17 @@ Mainmenu::Mainmenu()
     exitButton.setCharacterSize(menuButtonCharacterSize);
     exitButton.setString("Exit");
     exitButton.setPosition(menuButtonX, menuButtonY + 300);
+
+    leaderboardButton.setFont(font);
+    leaderboardButton.setCharacterSize(menuButtonCharacterSize);
+    leaderboardButton.setString("Leaderboard");
+    leaderboardButton.setPosition(20, 20);
 }
 
 int Mainmenu::draw(RenderWindow &window)
 {
     window.setTitle("Main menu"); // Меняем название окна
     Color menuBackground(111, 129, 214); // Цвет заднего фона меню (светло-голубой)
-    int menuNum = 0; // выбранный пункт меню
 
     Event event; // нужно для выхода из программы по нажатию на крестик
 
@@ -53,54 +57,25 @@ int Mainmenu::draw(RenderWindow &window)
                 window.close();
                 return -1;
             }
-        }
-
-
-        menuNum = 0; // обнуляем каждую итерацию
-        startGameButton.setFillColor(Color::White); // обнуляем цвет в белый
-        settingsButton.setFillColor(Color::White);  // на каждом кадре
-        rulesButton.setFillColor(Color::White);
-        exitButton.setFillColor(Color::White);
-
-        // ПРОВЕРЯЕМ НАВЕДЕНИЕ НА ПУНКТЫ МЕНЮ //
-        if (IntRect(startGameButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
-        { // если навелись на кнопку "Start game"
-            startGameButton.setFillColor(Color::Red); // подсвечиваем
-            menuNum = 1;                              // выставляем пункт меню
-        }
-        if (IntRect(settingsButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
-        { // если навелись на кнопку "Settings"
-            settingsButton.setFillColor(Color::Red); // подсвечиваем
-            menuNum = 2;                             // выставляем пункт меню
-        }
-        if (IntRect(rulesButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
-        {
-            rulesButton.setFillColor(Color::Red);
-            menuNum = 3;
-        }
-        if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
-        {
-            exitButton.setFillColor(Color::Red);
-            menuNum = 4;
-        }
-
-
-        // ПРОВЕРЯЕМ НАЖАТИЕ КЛАВИШИ //
-        if (Mouse::isButtonPressed(Mouse::Left))
-        {
-            switch (menuNum) // если при нажатии наведено на пункт меню
-            {
-            case 1:
-                return 1;
-            case 2:
-                return 2;
-            case 3:
-                return 3;
-            case 4:
+            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
                 return -1;
+
+            if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
+            {
+                if (IntRect(startGameButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                    return 1;
+                else if (IntRect(settingsButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                    return 2;
+                else if (IntRect(rulesButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                    return 3;
+                else if (IntRect(leaderboardButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                    return 4;
+                else if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                    return -1;
             }
         }
 
+        colorButtons(Mouse::getPosition(window));
 
         window.clear(menuBackground);
         window.draw(linuxLogo);
@@ -108,8 +83,35 @@ int Mainmenu::draw(RenderWindow &window)
         window.draw(settingsButton);
         window.draw(rulesButton);
         window.draw(exitButton);
+        window.draw(leaderboardButton);
         window.display();
     }
+}
 
-    return -1; // пока что эта строка недосягаема, пока нету кнопки выхода из игры
+void Mainmenu::colorButtons(Vector2i mousePosition)
+{
+    if (IntRect(startGameButton.getGlobalBounds()).contains(mousePosition))
+        startGameButton.setFillColor(Color::Red);
+    else
+        startGameButton.setFillColor(Color::White);
+
+    if (IntRect(settingsButton.getGlobalBounds()).contains(mousePosition))
+        settingsButton.setFillColor(Color::Red);
+    else
+        settingsButton.setFillColor(Color::White);
+
+    if (IntRect(rulesButton.getGlobalBounds()).contains(mousePosition))
+        rulesButton.setFillColor(Color::Red);
+    else
+        rulesButton.setFillColor(Color::White);
+
+    if (IntRect(exitButton.getGlobalBounds()).contains(mousePosition))
+        exitButton.setFillColor(Color::Red);
+    else
+        exitButton.setFillColor(Color::White);
+
+    if (IntRect(leaderboardButton.getGlobalBounds()).contains(mousePosition))
+        leaderboardButton.setFillColor(Color::Red);
+    else
+        leaderboardButton.setFillColor(Color::White);
 }

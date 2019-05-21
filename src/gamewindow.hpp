@@ -1,7 +1,13 @@
 #ifndef GAMEWINDOW_HPP
 #define GAMEWINDOW_HPP
 
+#include <sstream>
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <fstream>
 #include <SFML/Graphics.hpp>
+#include "textbox.hpp"
 
 using namespace sf;
 
@@ -17,10 +23,11 @@ class Gamewindow
 private:
     // ПЕРЕМЕННЫЕ
     Font font;
-int y_null = 3, x_null = 3;//координаты пустой клетки
+    int y_null, x_null;//координаты пустой клетки
     Text exitButton;
     Text timerText;
     Text gameTimeText;
+    Text winInfoText[2];
 
     Clock gameTimeClock;
 
@@ -28,17 +35,22 @@ int y_null = 3, x_null = 3;//координаты пустой клетки
     Texture gameNullTexture;
     gameCell puzzle[4][4];
 
+    int gameDifficulty, gameImage;
+
+    Textbox textbox;
+
     //МЕТОДЫ
     void colorExitButton(RenderWindow &window);
-    void colorPuzzles(Vector2i mousePosition, int gameDifficulty);
+    void colorPuzzles(Vector2i mousePosition);
     void drawBoard(RenderWindow &window, int gameDifficulty);
     void movePuzzle(int i, int j);
     void mixPuzzle();
-    void checkPuzzle();
+    bool isPuzzleSolved();
+    void savePlayerRecord(std::string playerName, int seconds);
 public:
-    Gamewindow();
+    Gamewindow(int gameDifficulty, int gameImage);
 
-    int draw(RenderWindow &window, int gameDifficulty, int gameImage);
+    int draw(RenderWindow &window);
 };
 
 #endif // GAMEWINDOW_HPP

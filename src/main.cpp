@@ -1,22 +1,34 @@
 #include <cstdlib>
 #include <iostream>
+#include <ctime>
+#include <cstring>
 #include <SFML/Graphics.hpp>
 #include "mainmenu.hpp"
 #include "settings.hpp"
 #include "rules.hpp"
 #include "gamewindow.hpp"
+#include "leaderboard.hpp"
 
 using namespace sf;
 
-int main()
+bool debug = false;
+
+int main(int argc, char* argv[])
 {
+    srand(time(NULL));
+
+    if (argc > 1) // включить дебаг режим
+        if (strcmp(argv[1], "-d") == 0)
+            debug = true;
+
     RenderWindow window(VideoMode(600, 600), "Hello, world!", Style::Close);
-    window.setFramerateLimit(20);
+    window.setFramerateLimit(30);
 
     Mainmenu* mainmenu;
     Settings* settingsmenu;
     Rules* rulesmenu;
     Gamewindow* game;
+    Leaderboard* leaderboard;
     int currentGameDifficulty = 2;
     int currentGameImage = 1;
 
@@ -26,6 +38,7 @@ int main()
     // 1: начать игру
     // 2: настройки
     // 3: правила игры
+    // 4: таблица лидеров
 
     while (programCode >= 0)
     {
@@ -38,8 +51,8 @@ int main()
             mainmenu = NULL;
             break;
         case 1:
-            game = new Gamewindow;
-            programCode = game->draw(window, currentGameDifficulty, currentGameImage);
+            game = new Gamewindow(currentGameDifficulty, currentGameImage);
+            programCode = game->draw(window);
             delete game;
             game = NULL;
             break;
@@ -56,6 +69,12 @@ int main()
             programCode = rulesmenu->draw(window);
             delete rulesmenu;
             rulesmenu = NULL;
+            break;
+        case 4:
+            leaderboard = new Leaderboard;
+            programCode = leaderboard->draw(window);
+            delete leaderboard;
+            leaderboard = NULL;
             break;
         default:
             programCode = -1;

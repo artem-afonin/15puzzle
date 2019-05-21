@@ -53,6 +53,7 @@ Settings::Settings()
     exitButton.setCharacterSize(characterSize);
     exitButton.setString("Exit settings");
     exitButton.setPosition(30, 500);
+    exitButton.setOutlineColor(Color::Red);
 }
 
 int Settings::draw(RenderWindow &window)
@@ -71,35 +72,36 @@ int Settings::draw(RenderWindow &window)
                 window.close();
                 return -1;
             }
+
             if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
                 return 0;
+
+            if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
+            {
+                if (IntRect(difficultyOne.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                {
+                    setGameDiffuculty(1);
+                }
+                else if (IntRect(difficultyTwo.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                {
+                    setGameDiffuculty(2);
+                }
+                else if (IntRect(gameImageNum.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                {
+                    setGameImage(1);
+                }
+                else if (IntRect(gameImagePic.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                {
+                    setGameImage(2);
+                }
+                else if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                {
+                    return 0;
+                }
+            }
         }
 
         colorExitButton(window);
-
-        if (Mouse::isButtonPressed(Mouse::Left))
-        {
-            if (IntRect(difficultyOne.getGlobalBounds()).contains(Mouse::getPosition(window)))
-            {
-                setGameDiffuculty(1);
-            }
-            else if (IntRect(difficultyTwo.getGlobalBounds()).contains(Mouse::getPosition(window)))
-            {
-                setGameDiffuculty(2);
-            }
-            else if (IntRect(gameImageNum.getGlobalBounds()).contains(Mouse::getPosition(window)))
-            {
-                setGameImage(1);
-            }
-            else if (IntRect(gameImagePic.getGlobalBounds()).contains(Mouse::getPosition(window)))
-            {
-                setGameImage(2);
-            }
-            else if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
-            {
-                return 0;
-            }
-        }
 
         colorDifficultyButtons();
         colorImageButtons();
@@ -175,11 +177,9 @@ void Settings::colorExitButton(RenderWindow &window)
     if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
     {
         exitButton.setOutlineThickness(2);
-        exitButton.setOutlineColor(Color::Red);
     }
     else
     {
         exitButton.setOutlineThickness(0);
-        exitButton.setOutlineColor(Color::White);
     }
 }

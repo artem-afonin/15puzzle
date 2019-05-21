@@ -5,4 +5,4 @@
 ### Running a project without the required ###
 ### parameters will cause an error. ###
 
-export LD_LIBRARY_PATH=lib/ && ./bin/main
+export LD_LIBRARY_PATH=lib/ && ./bin/main $1

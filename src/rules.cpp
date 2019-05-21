@@ -9,62 +9,33 @@ Rules::Rules()
 
     unsigned int characterSize = 45;
     unsigned int rulesSize = 25;
-    int x=15, y=15;
+    float x=15, y=15;
 
     exitButton.setFont(font);
     exitButton.setCharacterSize(characterSize);
     exitButton.setString("Exit settings");
     exitButton.setPosition(30, 500);
+    exitButton.setOutlineColor(Color::Red);
 
-    gameRules1.setFont(font);
-    gameRules1.setCharacterSize(rulesSize);
-    gameRules1.setString(L"Игровое поле представляет собой матрицу");
-    gameRules1.setPosition(x, y);
+    float counter = 0;
+    for (Text &z : gameRules)
+    {
+        z.setFont(font);
+        z.setCharacterSize(rulesSize);
+        z.setPosition(x, y + 50.f * counter++);
 
-    gameRules2.setFont(font);
-    gameRules2.setCharacterSize(rulesSize);
-    gameRules2.setString(L"4х4 (3х3) клеток, на котором по порядку");
-    gameRules2.setPosition(x, y+50);
+    }
 
-    gameRules3.setFont(font);
-    gameRules3.setCharacterSize(rulesSize);
-    gameRules3.setString(L"располагаются цифры от 1 до 15 (от 1 до 9). ");
-    gameRules3.setPosition(x, y+100);
-
-    gameRules4.setFont(font);
-    gameRules4.setCharacterSize(rulesSize);
-    gameRules4.setString(L"Последняя клетка – пустая. Клетки");
-    gameRules4.setPosition(x, y+150);
-
-    gameRules5.setFont(font);
-    gameRules5.setCharacterSize(rulesSize);
-    gameRules5.setString(L"перемешиваются. Задача игрока состоит в том,");
-    gameRules5.setPosition(x, y+200);
-
-    gameRules6.setFont(font);
-    gameRules6.setCharacterSize(rulesSize);
-    gameRules6.setString(L"чтобы восстановить их первоначальное");
-    gameRules6.setPosition(x, y+250);
-
-    gameRules7.setFont(font);
-    gameRules7.setCharacterSize(rulesSize);
-    gameRules7.setString(L"правильное расположение. Делать это можно");
-    gameRules7.setPosition(x, y+300);
-
-    gameRules8.setFont(font);
-    gameRules8.setCharacterSize(rulesSize);
-    gameRules8.setString(L"лишь путем перемещения на пустую клетку");
-    gameRules8.setPosition(x, y+350);
-
-    gameRules9.setFont(font);
-    gameRules9.setCharacterSize(rulesSize);
-    gameRules9.setString(L"другой, соседней с ней клетки (расположенной");
-    gameRules9.setPosition(x, y+400);
-
-    gameRules10.setFont(font);
-    gameRules10.setCharacterSize(rulesSize);
-    gameRules10.setString(L"слева, справа, сверху или снизу от пустой).");
-    gameRules10.setPosition(x, y+450);
+    gameRules[0].setString(L"Игровое поле представляет собой матрицу");
+    gameRules[1].setString(L"4х4 (3х3) клеток, на котором по порядку");
+    gameRules[2].setString(L"располагаются цифры от 1 до 15 (от 1 до 9). ");
+    gameRules[3].setString(L"Последняя клетка – пустая. Клетки");
+    gameRules[4].setString(L"перемешиваются. Задача игрока состоит в том,");
+    gameRules[5].setString(L"чтобы восстановить их первоначальное");
+    gameRules[6].setString(L"правильное расположение. Делать это можно");
+    gameRules[7].setString(L"лишь путем перемещения на пустую клетку");
+    gameRules[8].setString(L"другой, соседней с ней клетки (расположенной");
+    gameRules[9].setString(L"слева, справа, сверху или снизу от пустой).");
 }
 
 int Rules::draw(RenderWindow &window)
@@ -83,45 +54,32 @@ int Rules::draw(RenderWindow &window)
                 window.close();
                 return -1;
             }
+
+            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
+                return 0;
+
+            if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
+            {
+                if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                {
+                    return 0;
+                }
+            }
         }
 
         colorExitButton(window);
 
-        if (Mouse::isButtonPressed(Mouse::Left))
-        {
-            if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
-            {
-                return 0;
-            }
-        }
-
         window.clear(menuBackground);
         window.draw(exitButton);
-
-        window.draw(gameRules1);
-        window.draw(gameRules2);
-        window.draw(gameRules3);
-        window.draw(gameRules4);
-        window.draw(gameRules5);
-        window.draw(gameRules6);
-        window.draw(gameRules7);
-        window.draw(gameRules8);
-        window.draw(gameRules9);
-        window.draw(gameRules10);
-
+        for (Text &x : gameRules)
+            window.draw(x);
         window.display();
     }
 }
 void Rules::colorExitButton(RenderWindow &window)
 {
     if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
-    {
         exitButton.setOutlineThickness(2);
-        exitButton.setOutlineColor(Color::Red);
-    }
     else
-    {
         exitButton.setOutlineThickness(0);
-        exitButton.setOutlineColor(Color::White);
-    }
 }

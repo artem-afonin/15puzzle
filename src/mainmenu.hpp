@@ -17,10 +17,13 @@ private:
     Text settingsButton;
     Text rulesButton;
     Text exitButton;
+    Text leaderboardButton;
 
     int menuButtonX;
     int menuButtonY;
     unsigned int menuButtonCharacterSize;
+
+    void colorButtons(Vector2i mousePosition);
 public:
     Mainmenu();
     int draw(RenderWindow &window);
