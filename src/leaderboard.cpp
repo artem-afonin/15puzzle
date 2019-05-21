@@ -89,13 +89,22 @@ void Leaderboard::fillLeaderboardText()
     std::ifstream file;
     file.open(playerRecordsFilepath);
     if (!file.is_open())
+    {
+        leaderboardText[1].setString("There\nare\nno\nrecords");
         return;
+    }
 
     getline(file, input, '\n');
     while (!file.eof())
     {
         players.push_back(input);
         getline(file, input, '\n');
+    }
+
+    if (players.size() == 0)
+    {
+        leaderboardText[1].setString("There\nare\nno\nrecords");
+        return;
     }
 
     for (auto &x : players)
