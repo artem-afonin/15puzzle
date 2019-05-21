@@ -34,6 +34,11 @@ Mainmenu::Mainmenu()
     exitButton.setCharacterSize(menuButtonCharacterSize);
     exitButton.setString("Exit");
     exitButton.setPosition(menuButtonX, menuButtonY + 300);
+
+    leaderboardButton.setFont(font);
+    leaderboardButton.setCharacterSize(menuButtonCharacterSize);
+    leaderboardButton.setString("Leaderboard");
+    leaderboardButton.setPosition(20, 20);
 }
 
 int Mainmenu::draw(RenderWindow &window)
@@ -63,6 +68,8 @@ int Mainmenu::draw(RenderWindow &window)
                     return 2;
                 else if (IntRect(rulesButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
                     return 3;
+                else if (IntRect(leaderboardButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                    return 4;
                 else if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
                     return -1;
             }
@@ -76,6 +83,7 @@ int Mainmenu::draw(RenderWindow &window)
         window.draw(settingsButton);
         window.draw(rulesButton);
         window.draw(exitButton);
+        window.draw(leaderboardButton);
         window.display();
     }
 }
@@ -101,4 +109,9 @@ void Mainmenu::colorButtons(Vector2i mousePosition)
         exitButton.setFillColor(Color::Red);
     else
         exitButton.setFillColor(Color::White);
+
+    if (IntRect(leaderboardButton.getGlobalBounds()).contains(mousePosition))
+        leaderboardButton.setFillColor(Color::Red);
+    else
+        leaderboardButton.setFillColor(Color::White);
 }

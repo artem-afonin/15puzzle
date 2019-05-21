@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "gamewindow.hpp"
+#include <vector>
 
 using namespace sf;
 
@@ -301,12 +302,79 @@ bool Gamewindow::isPuzzleSolved()
     return true;
 }
 
+int sliceSecondFromString(std::string input)
+{
+    std::string newStr;
+    bool flag = false;
+
+    for (size_t i = 0; i < input.length(); i++)
+    {
+        if (flag)
+        {
+            newStr += input[i];
+        }
+        if (input[i] == ':')
+        {
+            flag = true;
+        }
+    }
+
+    return atoi(newStr.c_str());
+}
+
 void Gamewindow::savePlayerRecord(std::string playerName, int seconds)
 {
     std::ofstream file;
-    file.open(playerRecordsFilepath, std::ios::app);
-    if (!file.is_open())
+    std::ifstream checkFile;
+    checkFile.open(playerRecordsFilepath, std::ios::in);
+    if (!checkFile.is_open())
         exit(1);
-    file << playerName << ":" << (int)seconds << '\n';
-    file.close();
+    std::vector <std::string> fileStrings(0);
+    std::string input;
+
+    // считываем все строки
+    std::getline(checkFile, input, '\n');
+    while (!checkFile.eof())
+    {
+        fileStrings.push_back(input);
+        std::getline(checkFile, input, '\n');
+    }
+    checkFile.close();
+
+    // если уже достаточно рекордов
+    if (fileStrings.size() >= 5)
+    {
+        int max_index = -1, max = seconds;
+        for (int i = 0; i < 5; i++)
+        {
+            if (sliceSecondFromString(fileStrings[i]) > max)
+            {
+                max = sliceSecondFromString(fileStrings[i]);
+                max_index = i;
+            }
+        }
+
+        if (max_index != -1)
+        {
+            fileStrings[max_index] = playerName + ':' + std::to_string(seconds);
+        }
+
+        file.open(playerRecordsFilepath, std::ios::out);
+        if (!file.is_open())
+            exit(1);
+
+        for (auto &x : fileStrings)
+        {
+            file << x << '\n';
+        }
+        file.close();
+    }
+    else
+    {
+        file.open(playerRecordsFilepath, std::ios::app);
+        if (!file.is_open())
+            exit(1);
+        file << playerName << ":" << (int)seconds << '\n';
+        file.close();
+    }
 }

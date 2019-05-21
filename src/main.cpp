@@ -7,6 +7,7 @@
 #include "settings.hpp"
 #include "rules.hpp"
 #include "gamewindow.hpp"
+#include "leaderboard.hpp"
 
 using namespace sf;
 
@@ -27,6 +28,7 @@ int main(int argc, char* argv[])
     Settings* settingsmenu;
     Rules* rulesmenu;
     Gamewindow* game;
+    Leaderboard* leaderboard;
     int currentGameDifficulty = 2;
     int currentGameImage = 1;
 
@@ -36,6 +38,7 @@ int main(int argc, char* argv[])
     // 1: начать игру
     // 2: настройки
     // 3: правила игры
+    // 4: таблица лидеров
 
     while (programCode >= 0)
     {
@@ -66,6 +69,12 @@ int main(int argc, char* argv[])
             programCode = rulesmenu->draw(window);
             delete rulesmenu;
             rulesmenu = NULL;
+            break;
+        case 4:
+            leaderboard = new Leaderboard;
+            programCode = leaderboard->draw(window);
+            delete leaderboard;
+            leaderboard = NULL;
             break;
         default:
             programCode = -1;
