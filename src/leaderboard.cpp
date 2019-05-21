@@ -31,6 +31,13 @@ Leaderboard::Leaderboard()
         leaderboardText[i].setPosition(x, y + i * dy);
         leaderboardText[i].setLetterSpacing(1);
     }
+
+    resetButton.setFont(font);
+    resetButton.setOutlineColor(Color::Red);
+    resetButton.setOutlineThickness(0.f);
+    resetButton.setCharacterSize(characterSize);
+    resetButton.setString("Reset\nleaderboard");
+    resetButton.setPosition(360, 480);
 }
 
 int Leaderboard::draw(RenderWindow &window)
@@ -55,11 +62,18 @@ int Leaderboard::draw(RenderWindow &window)
             {
                 if (IntRect(exitButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
                     return 0;
+                if (IntRect(resetButton.getGlobalBounds()).contains(Mouse::getPosition(window)))
+                {
+                    remove(playerRecordsFilepath.c_str());
+                    resetButton.setString("Reset\nsuccesful!");
+                    resetButton.setFillColor(Color::Black);
+                }
             }
         }
 
         window.clear(gameBackground);
         window.draw(exitButton);
+        window.draw(resetButton);
         for (Text &g : leaderboardText)
             window.draw(g);
         window.display();
@@ -73,7 +87,7 @@ void Leaderboard::fillLeaderboardText()
     std::ifstream file;
     file.open(playerRecordsFilepath);
     if (!file.is_open())
-        exit(1);
+        return;
 
     getline(file, input, '\n');
     while (!file.eof())

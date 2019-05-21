@@ -12,6 +12,7 @@ private:
     Font font;
     Text exitButton;
     Text leaderboardText[5];
+    Text resetButton;
 
     //МЕТОДЫ
     void fillLeaderboardText();
