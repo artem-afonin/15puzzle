@@ -8,6 +8,7 @@ bin
 include
 lib
 data/playerRecords.txt
+thirdparty/
 
 ##### Default #####
 # Prerequisites
@@ -42,3 +43,4 @@ data/playerRecords.txt
 *.exe
 *.out
 *.app
+

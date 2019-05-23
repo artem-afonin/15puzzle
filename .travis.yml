@@ -6,6 +6,10 @@ compiler: g++
 branches:
   only:
   - develop
+  - testcover
 
 script:
+  - chmod 777 build.sh
+  - chmod 777 buildtest.sh
   - ./build.sh
+  - ./buildtest.sh
