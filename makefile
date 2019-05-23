@@ -83,7 +83,7 @@ $(OBJ7): $(SOURCE7)
 clean:
 	rm -rf build/*.o build/test/* data/playerRecords.txt
 
-test: addDir testlib bin/test
+test: addDir testlib $(TESTEXE)
 
 testlib: $(TESTLIBO)
 	ar -rv $(TESTLIBA) $(TESTLIBO)
