@@ -30,6 +30,32 @@ TEST(Textbox, setString_2)
 	ASSERT_TRUE(result);
 }
 
+int sliceSecondFromString(std::string input);
+
+TEST(RecordSaving, sliceInt_1)
+{
+	int result = sliceSecondFromString("test:40");
+	ASSERT_EQ(40, result);
+}
+
+TEST(RecordSaving, sliceInt_2)
+{
+	int result = sliceSecondFromString("test:error");
+	ASSERT_EQ(0, result);
+}
+
+TEST(RecordSaving, sliceInt_3)
+{
+	int result = sliceSecondFromString("test42");
+	ASSERT_EQ(0, result);
+}
+
+TEST(RecordSaving, sliceInt_4)
+{
+	int result = sliceSecondFromString("42");
+	ASSERT_EQ(0, result);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
