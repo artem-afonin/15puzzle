@@ -265,7 +265,7 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
 
 int Gamewindow::movePuzzle(int i, int j)
 {
-    if ((i < 0 || i > size - 1)&&(i < 0 || i > size - 1))
+    if ((i < 0 || i > size - 1)&&(j < 0 || j > size - 1))
     {
         return 4;
     }
