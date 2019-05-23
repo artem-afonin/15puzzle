@@ -1,4 +1,4 @@
-.PHONY=addDir all clean
+.PHONY=addDir all clean remake test testlib
 
 CC=g++
 CFLAGS=-Wall -c -Iinclude/ -std=c++11
@@ -6,6 +6,9 @@ EFLAGS=-Llib/ -lsfml-system -lsfml-window -lsfml-graphics
 
 SRC=src/
 BUILD=build/
+TESTSRC=test/
+TESTBUILD=$(BUILD)test/
+GTEST_DIR = thirdparty/googletest
 
 SOURCE1=$(SRC)main.cpp
 SOURCE2=$(SRC)mainmenu.cpp
@@ -14,6 +17,7 @@ SOURCE4=$(SRC)rules.cpp
 SOURCE5=$(SRC)gamewindow.cpp
 SOURCE6=$(SRC)textbox.cpp
 SOURCE7=$(SRC)leaderboard.cpp
+TESTSOURCE=$(TESTSRC)test.cpp
 
 OBJ1T=$(subst $(SRC),$(BUILD),$(SOURCE1))
 OBJ1=$(OBJ1T:.cpp=.o)
@@ -36,15 +40,21 @@ OBJ6=$(OBJ6T:.cpp=.o)
 OBJ7T=$(subst $(SRC),$(BUILD),$(SOURCE7))
 OBJ7=$(OBJ7T:.cpp=.o)
 
+TESTOBJT=$(subst $(TESTSRC),$(TESTBUILD),$(TESTSOURCE))
+TESTOBJ=$(TESTOBJT:.cpp=.o)
 
 EXECUTABLE=bin/main
+TESTEXE=bin/test
+
+TESTLIBO=build/test/gtest-all.o
+TESTLIBA=build/test/libgtest.a
 
 all: addDir $(EXECUTABLE)
 
 remake: clean all
 
 addDir:
-	mkdir -p build/ bin/
+	mkdir -p build/ bin/ build/test/
 
 $(EXECUTABLE): $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7)
 	$(CC) $^ $(EFLAGS) -o $@
@@ -71,4 +81,21 @@ $(OBJ7): $(SOURCE7)
 	$(CC) $^ $(CFLAGS) -o $@
 
 clean:
-	rm -rf */*.o data/playerRecords.txt
+	rm -rf build/*.o build/test/* data/playerRecords.txt
+
+test: addDir testlib bin/test
+
+testlib: $(TESTLIBO)
+	ar -rv $(TESTLIBA) $(TESTLIBO)
+
+$(TESTLIBO):
+	$(CC) -std=c++11 -isystem ${GTEST_DIR}/include -I${GTEST_DIR} \
+    -pthread -c ${GTEST_DIR}/src/gtest-all.cc -o $@
+
+$(TESTEXE): $(TESTOBJ) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7)
+	$(CC) -std=c++11 -isystem ${GTEST_DIR}/include -pthread \
+	$^ build/test/libgtest.a \
+	$(EFLAGS) -o $@
+
+$(TESTOBJ): $(TESTSOURCE)
+	$(CC) $(CFLAGS) $^ -I $(GTEST_DIR)/include -o $@
