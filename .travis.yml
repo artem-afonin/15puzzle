@@ -11,7 +11,5 @@ branches:
 script:
   - chmod 777 build.sh
   - chmod 777 buildtest.sh
-  - chmod 777 runtest.sh
   - ./build.sh
   - ./buildtest.sh
-  - ./runtest.sh
