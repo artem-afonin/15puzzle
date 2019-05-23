@@ -47,14 +47,6 @@ TEST(Textbox, setString_2)
 	ASSERT_TRUE(result);
 }
 
-TEST(Textbox, getInput)
-{
-	Textbox box;
-	String str("teststring");
-	std::string result = box.getInput();
-	ASSERT_TRUE(str.toAnsiString() == result);
-}
-
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
