@@ -263,8 +263,20 @@ void Gamewindow::drawBoard(RenderWindow &window, int gameDifficulty)
     }
 }
 
-void Gamewindow::movePuzzle(int i, int j)
+int Gamewindow::movePuzzle(int i, int j)
 {
+    if ((i < 0 || i > size - 1)&&(i < 0 || i > size - 1))
+    {
+        return 4;
+    }
+    if (i < 0 || i > size - 1)
+    {
+        return 2;
+    }
+    if (j < 0 || j > size - 1)
+    {
+        return 3;
+    }
     int y_zero = (puzzle[x_null][y_null].position - 1)/size;
     int x_zero = (puzzle[x_null][y_null].position - 1)%size;
 
@@ -277,7 +289,8 @@ void Gamewindow::movePuzzle(int i, int j)
         puzzle[x_null][y_null].position = puzzle[i][j].position;
         puzzle[i][j].position = temp;
     }
-    else return;
+    else return 1;
+    return 0;
 }
 
 void Gamewindow::mixPuzzle()

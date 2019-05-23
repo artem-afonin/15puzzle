@@ -49,7 +49,7 @@ private:
 public:
     Gamewindow(int gameDifficulty, int gameImage);
 
-    void movePuzzle(int i, int j);
+    int movePuzzle(int i, int j);
     int draw(RenderWindow &window);
 };
 
