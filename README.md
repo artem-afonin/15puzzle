@@ -27,3 +27,11 @@ $ ./build.sh
 ```
 $ ./run.sh
 ```
+
+### **Сборка и запуск тестов**
+```
+$ git clone https://github.com/lertoss/kursovaya-15-puzzle
+$ cd kursovaya-15-puzzle
+$ ./buildtest.sh
+$ ./runtest.sh
+```
